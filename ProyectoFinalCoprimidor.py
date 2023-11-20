@@ -75,7 +75,7 @@ class Huffman:
     
 
 Objeto1 = Huffman()
-Direccion = "OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\input.txt"
+Direccion = "input.txt"
 frecuencia_letras = Objeto1.frecuencia_simbolos(Direccion)
 arbol_de_huffman = Objeto1.generar_arbol_huffman(frecuencia_letras)
 diccionario_codigos_nuevos = Objeto1.diccionario_codigos_nuevos(arbol_de_huffman)
