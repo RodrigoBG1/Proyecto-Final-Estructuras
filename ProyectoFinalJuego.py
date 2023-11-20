@@ -42,7 +42,8 @@ MMMSMMMMSSSSP   `MMMM     ;.;   :MMMMMMMMM;
 """
 
 print(Titulo, Personaje)
-
+        
+        
 dialogos = """
                     dS$$S$S$S$S$S$S$$Sb                    
                    :$$S^S$S$S$S$S$S^S$$;                   
@@ -71,18 +72,48 @@ MMOMMMMOMMMOMMOOMMbT8bTSSSSSSSSSPd8OPdOOOMMMMOOMMMMOMMMOOMM
 MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """
 
 class Juego:
+    def dialogos(self, mensaje):
+        dialogo = """
+                    dS$$S$S$S$S$S$S$$Sb                    
+                   :$$S^S$S$S$S$S$S^S$$;                   
+                   SSP   `^$S$S$^'   TSS                   
+                   $$       `"'       $$                   
+                  _SS ,-           -  SS_      ___________________________________            
+                 :-.|  _    - .-   _  |.-;    |                                   
+                 :\(; ' "-._.'._.-" ` |)/;    |    {}                             
+                  \`|  , o       o .  |'/     |                                   
+                   ":     -'   `-     ;"      |                                   
+                     ;.              :        |                                   
+                     : `    ._.    ' ;       /____________________________________            
+                   .sSb   ._____.   dSs.                   
+                _.d8dSSb.   ._.   .SSbT8b._                
+            _.oOPd88SSSS T.     .P SSSS888OOo.             
+        _.mMMOOPd888SSSSb TSqqqSP dSSSS88OMOOOMm._         
+     .oOMMMOMOOM8O8OSSSSSb TSSSP dSSSSS8OOMMOOMMOOOo._     
+   .OOMMOOOMMOOMOOOO  "^SSSTSSP dSSS^"OOOOMMOOMMMOOMMMb.   
+  dOOOMMMOMMOOOMOOOO      "^SSSS^"   :OOO8MMMOOMMOOMMOMMb  
+ :MMMOOMMOMMOOMMO8OS         `P      8O8OPdMMOOMMOMMOMMMM; 
+ MMMMOOMMMMMOOMbTO8S;               :8888MMMMMOMMOMMOMMMMM 
+ OMMMMOOMMMMOOOMMOOOS        S     :O8OPdMOMMMOMOMMOOMMMMO 
+:OMMMMOOMMOMMOOMbTObTb.     :S;   .PdOPdMOOMMMMMOMMOMMMMMO;
+MOOMMMMOMMOMMOOMMMOObTSSg._.SSS._.PdOPdMOOMMMMOMMMMOMMMMOOM
+MMOMMMMOMMMOMMOOMMbT8bTSSSSSSSSSPd8OPdOOOMMMMOOMMMMOMMMOOMM
+MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
+        return dialogo
+        
+        
     def __init__(self, nom):
         self.nom = nom
         self.decisiones = {
             "inicio": {
-                "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \ncreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?".format(self.nom),
+                "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \n\t\t\t\t\t\tcreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?".format(self.nom),
                 "opciones": {
                     "mexico": "Mexico",
                     "buenos aires": "Buenos Aires"
                 }
             },
     "Mexico": {
-        "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t- Cabar un tunel \n\t- Asalto a mano amrada",
+        "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cabar un tunel \n\t\t\t\t\t\t\t- Asalto a mano amrada",
         "opciones": {
             "tunel": "tunel",
             "mano": "mano"
@@ -119,10 +150,15 @@ class Juego:
         }
         self.estado_actual = "inicio"
 
+    def mostrar_dialogo(self, mensaje):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(self.dialogos(mensaje))
+
     def jugar(self):
         while True:
             decision = self.decisiones[self.estado_actual]
-            respuesta = input(decision["mensaje"] + " ").lower()  
+            self.mostrar_dialogo(decision["mensaje"])
+            respuesta = input().lower() 
             for opcion, estado in decision["opciones"].items():
                 if opcion in respuesta:
                     self.estado_actual = estado
