@@ -80,8 +80,8 @@ class Juego:
                    $$       `"'       $$                   
                   _SS ,-           -  SS_      ___________________________________            
                  :-.|  _    - .-   _  |.-;    |                                   
-                 :\(; ' "-._.'._.-" ` |)/;    |    {}                             
-                  \`|  , o       o .  |'/     |                                   
+                 :\(; ' "-._.'._.-" ` |)/;    |    {}                            
+                  \`|  , o       o .  |'/     |                                 
                    ":     -'   `-     ;"      |                                   
                      ;.              :        |                                   
                      : `    ._.    ' ;       /____________________________________            
@@ -113,19 +113,94 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 }
             },
     "Mexico": {
-        "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cabar un tunel \n\t\t\t\t\t\t\t- Asalto a mano amrada",
+        "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cabar un tunel \n\t\t\t\t\t\t\t- Asalto a mano armada",
         "opciones": {
-            "tunel": "tunel",
+            "tunel": self.j,
+            "regresar": "tunel",
             "mano": "mano"
         }
             },
         "tunel": {
-            "mensaje": "Has elegido cabar un tunel para poder hacer el atraco, ",
+            "mensaje": "Has elegido cabar un tunel para poder hacer el atraco, escoge tus armas(Debido a que tu atraco es por tunel solo puedes escoger 2 armas): \n\t\t\t\t\t\t\t-Fusil \n\t\t\t\t\t\t\t-Escopeta \n\t\t\t\t\t\t\t-Subfusil \n\t\t\t\t\t\t\t-Bombas",
             "opciones": {
-                "toma": "fin",
-                "deja": "inicio"
+                "fusil y escopeta": "FUSIL/ESCOPETA",
+                "escopeta y fusil": "FUSIL/ESCOPETA",
+
+                "fusil y subfusil": "FUSIL/SUBFUSIL",
+                "subfusil y fusil": "FUSIL/SUBFUSIL",
+
+                "fusil y bombas": "FUSIL/BOMBAS",
+                "bombas y fusil": "FUSIL/BOMBAS",
+
+                "escopeta y subfusil": "ESCOPETA/SUBFUSIL",
+                "subfusil y escopeta": "ESCOPETA/SUBFUSIL",
+
+                "escopeta y bombas": "ESCOPETA/BOMBAS",
+                "bombas y escopeta": "ESCOPETA/BOMBAS",
+
+                "subfusil y bombas": "SUBFUSIL/BOMBAS",
+                "bombas y subfusil": "SUBFUSIL/BOMBAS",
             }
+            },
+                "FUSIL/ESCOPETA": 
+                {
+                    "mensaje": "Elegiste fusil y escopeta, para finalizar el plan del golpe necesitas escoger tu vehiculo de escape",
+                    "opciones":
+                    {
+                        "carro": "Carro",
+                        "moto": "Moto",
+                        "camion": "Camion",
+                        "helicoptero": "Helicop",
+                    }
                 },
+                    "Carro":
+                    {
+                        "mensaje": "Ya has hecho tu tunel y has aparecido en el sotano, el dinero se encuentra en la caja fuerte pasando las oficinas, te alistas \n\t\t\t\t\t\t y subes las escaleras un guardia viene caminando, que decides hacer?",
+                        "opciones": 
+                        {
+                            "disparar": "Disparar",
+                            "esconderme": "Esconder",
+                            "golpear": "Golpear",
+                        }
+                    },
+                        "Disparar":
+                        {
+                            "mensaje": "Alertaste a los policias y te metieron a la carcel, para repetir esa parte escribe 'Repetir'",
+                            "opciones": 
+                            {"repetir": "Carro"}
+                        },
+
+                        "Esconder":
+                        {
+                            "mensaje": "Listo, el policia se fue y no te vio, ahora camina por el pasillo...\n\t\t\t\t\t\tTerminando el pasillo del lado izquierdo",
+                            
+                        },
+
+                "FUSIL/SUBFUSIL":
+                {
+
+                },
+
+                "FUSIL/BOMBAS":
+                {
+
+                },
+
+                "ESCOPETA/SUBFUSIL":
+                {
+
+                },
+
+                "ESCOPETA/BOMBAS":
+                {
+
+                },
+
+                "SUBFUSIL/BOMBAS":
+                {
+
+                },
+
         "mano": {
             "mensaje": "¡Has encontrado un tesoro! ¿Lo tomas o lo dejas?",
             "opciones": {
@@ -155,17 +230,27 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         print(self.dialogos(mensaje))
 
     def jugar(self):
+        decision = self.decisiones[self.estado_actual]
+        self.mostrar_dialogo(decision["mensaje"])
         while True:
-            decision = self.decisiones[self.estado_actual]
-            self.mostrar_dialogo(decision["mensaje"])
             respuesta = input().lower() 
             for opcion, estado in decision["opciones"].items():
                 if opcion in respuesta:
-                    self.estado_actual = estado
+                    if callable(estado):  # Verifica si es una función antes de llamarla
+                        estado()
+                    else:
+                        self.estado_actual = estado
+                        decision = self.decisiones[self.estado_actual]
+                        self.mostrar_dialogo(decision["mensaje"])
                     break
+                    """self.estado_actual = estado
+                    break"""
             if not self.estado_actual:
                 break
-            
+
+    def j(self):
+        print("hola")
+
 nom = input("Ingresa tu nombre: ")
 print("Cargando...")
 time.sleep(2) 
