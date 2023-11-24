@@ -40,36 +40,7 @@ MMMSMMMMSSSSP   `MMMM     ;.;   :MMMMMMMMM;
   :$$$$$$$$$$$$$$$$$$$$$.//.:$$$$SSSSSSSMM;
   :$$$$$$$$$$$$$$$$$$$$$$.`.:$$SSSSSSSMMMP
 """
-
 print(Titulo, Personaje)
-        
-        
-dialogos = """
-                    dS$$S$S$S$S$S$S$$Sb                    
-                   :$$S^S$S$S$S$S$S^S$$;                   
-                   SSP   `^$S$S$^'   TSS                   
-                   $$       `"'       $$                   
-                  _SS ,-           -  SS_      ___________________________________            
-                 :-.|  _    - .-   _  |.-;    |                                   |
-                 :\(; ' "-._.'._.-" ` |)/;    |                                   |
-                  \`|  , o       o .  |'/     |                                   |
-                   ":     -'   `-     ;"      |                                   |
-                     ;.              :        |                                   |
-                     : `    ._.    ' ;       /____________________________________|            
-                   .sSb   ._____.   dSs.                   
-                _.d8dSSb.   ._.   .SSbT8b._                
-            _.oOPd88SSSS T.     .P SSSS888OOo.             
-        _.mMMOOPd888SSSSb TSqqqSP dSSSS88OMOOOMm._         
-     .oOMMMOMOOM8O8OSSSSSb TSSSP dSSSSS8OOMMOOMMOOOo._     
-   .OOMMOOOMMOOMOOOO  "^SSSTSSP dSSS^"OOOOMMOOMMMOOMMMb.   
-  dOOOMMMOMMOOOMOOOO      "^SSSS^"   :OOO8MMMOOMMOOMMOMMb  
- :MMMOOMMOMMOOMMO8OS         `P      8O8OPdMMOOMMOMMOMMMM; 
- MMMMOOMMMMMOOMbTO8S;               :8888MMMMMOMMOMMOMMMMM 
- OMMMMOOMMMMOOOMMOOOS        S     :O8OPdMOMMMOMOMMOOMMMMO 
-:OMMMMOOMMOMMOOMbTObTb.     :S;   .PdOPdMOOMMMMMOMMOMMMMMO;
-MOOMMMMOMMOMMOOMMMOObTSSg._.SSS._.PdOPdMOOMMMMOMMMMOMMMMOOM
-MMOMMMMOMMMOMMOOMMbT8bTSSSSSSSSSPd8OPdOOOMMMMOOMMMMOMMMOOMM
-MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """
 
 class Juego:
     def dialogos(self, mensaje):
@@ -99,19 +70,19 @@ class Juego:
 MOOMMMMOMMOMMOOMMMOObTSSg._.SSS._.PdOPdMOOMMMMOMMMMOMMMMOOM
 MMOMMMMOMMMOMMOOMMbT8bTSSSSSSSSSPd8OPdOOOMMMMOOMMMMOMMMOOMM
 MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
-        return dialogo
+        return dialogo.format(mensaje)
         
         
     def __init__(self, nom):
         self.nom = nom
         self.decisiones = {
-            "inicio": {
-                "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \n\t\t\t\t\t\tcreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?".format(self.nom),
-                "opciones": {
-                    "mexico": "Mexico",
-                    "buenos aires": "Buenos Aires"
-                }
-            },
+"inicio": {
+    "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \n\t\t\t\t\t\tcreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?".format(self.nom),
+    "opciones": {
+        "mexico": "Mexico",
+        "buenos aires": "Buenos Aires"
+    }
+},
     "Mexico": {
         "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cabar un tunel \n\t\t\t\t\t\t\t- Asalto a mano armada",
         "opciones": {
@@ -121,7 +92,16 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         }
             },
         "tunel": {
-            "mensaje": "Has elegido cabar un tunel para poder hacer el atraco, escoge tus armas(Debido a que tu atraco es por tunel solo puedes escoger 2 armas): \n\t\t\t\t\t\t\t-Fusil \n\t\t\t\t\t\t\t-Escopeta \n\t\t\t\t\t\t\t-Subfusil \n\t\t\t\t\t\t\t-Bombas",
+            "mensaje": "Has elegido cabar un tunel, ahora puede que los caluclos fallen, puedes ver el mapa o seguir, puedes ver mapa o seguir",
+            "opciones": {
+                "mapa": self.mapa,
+                "seguir": "FUSIL/ESCOPETA"
+            }
+            },
+        
+            
+        "tunel": {
+            "mensaje": "Para seguir con el plan, escoge tus armas(Debido a que tu atraco es por tunel solo puedes escoger 2 armas): \n\t\t\t\t\t\t\t-Fusil \n\t\t\t\t\t\t\t-Escopeta \n\t\t\t\t\t\t\t-Subfusil \n\t\t\t\t\t\t\t-Bombas",
             "opciones": {
                 "fusil y escopeta": "FUSIL/ESCOPETA",
                 "escopeta y fusil": "FUSIL/ESCOPETA",
@@ -172,9 +152,18 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
                         "Esconder":
                         {
-                            "mensaje": "Listo, el policia se fue y no te vio, ahora camina por el pasillo...\n\t\t\t\t\t\tTerminando el pasillo del lado izquierdo",
-                            
+                            "mensaje": "Listo, el policia se fue y no te vio, ahora camina por el pasillo...\n\t\t\t\t\t\tTerminando el pasillo del lado izquierdo", 
                         },
+                    "Golpear":
+                    {
+                        "mensajeje":"Listo ya tienes un policia menos, que te esta",
+                        "opciones": 
+                        {
+                            "disparar": "Disparar",
+                            "esconderme": "Esconder",
+                            "golpear": "Golpear",
+                        }
+                    },
 
                 "FUSIL/SUBFUSIL":
                 {
@@ -225,9 +214,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         }
         self.estado_actual = "inicio"
 
-    def mostrar_dialogo(self, mensaje):
+
+    def mostrar_dialogo(self, mensaje, mostrar_art=True):
         os.system('cls' if os.name == 'nt' else 'clear')
-        print(self.dialogos(mensaje))
+        if mostrar_art:
+            print(self.dialogos(mensaje))
+        else:
+            print(mensaje)
 
     def jugar(self):
         decision = self.decisiones[self.estado_actual]
@@ -250,7 +243,83 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
     def j(self):
         print("hola")
-
+        
+    def mapa(self):
+        print("Este será el mapa del banco, no te lo podras llevar por lo que te lo tienes que aprender")
+        mapa = """
+                                                                                                            
+          ████████████████████████████████████████████████████████████████████████████████████████████            
+          █ ██                             ███           █        █               █               █               
+          █ ██                             ███           █        █               █               █               
+          █ ██                             ███           █        █               █               █               
+          █ ██                             ███           █        █                               █               
+          █ ██                             ███           █        █               █               █               
+          █ ██                             ███                                    █               █               
+          █ ██                             ███                                    █           ██████████         
+          █ ██                             ███                                    █                            
+          █ ██                              ██████████████████                  ███            Entrada                
+          █ ██                            █████████   Entrada                                 principal                  
+          █ ██          Bobeda            █████████    a la                                                        
+          █ ██                            █████████   bobeda                                  ██████████              
+          █ ██                              ███████████████████      ███████████████████████      █               
+          █ ██                             ███                █                                   █               
+          █ ██                             ███                █                                   █                
+          █ ██                             ███                █                                   █
+          █ ██                             ███                █               ofic                █        
+          █ ██                             ███                █                                   █               
+          █ ██                             ███                █                                   █               
+          █ ██                             ███                                                    █               
+          █ ███████████████████████████████████████████████████████████████████████████████████████                                                                          
+        """
+        print(mapa)
+        print("Escrive seguir para avanzar")
+        
+    def laverinto(self):
+        laverinto = """
+           ██████████████████████████████████████████████████████████████████████████████           
+           ██████████████████████████████████████████████████████████████████████████████           
+           ███                      ███                                               ███           
+           ███                      ███                                               ███           
+           ███                      ███                                               ███           
+           ███     ████████████     ███     █████████████████████████████     ███████████           
+           ███             ████             ███                      ████     ███                   
+           ███             ████             ███                      ████     ███                   
+           ███             ████             ███                      ████     ███                   
+           ████████████████████     ████████████████████████████     ████████████     ███           
+           ████████████████████     ████████████████████████████     ████████████     ███           
+           ███             ████                              ███                      ███           
+           ███             ████                              ███                      ███           
+           ███             ████                              ███                      ███           
+           ███     ███     ████     ████████████████████     ███     ████████████     ███           
+           ███     ███     ████     ████████████████████     ███     ████████████     ███           
+           ███     ███     ████     ███              ███     ███     ████     ███     ███           
+           ███     ███     ████     ███              ███     ███     ████     ███     ███           
+           ███     ████████████████████     ███      ███     ███     ████     ███     ███           
+           ███     ████████████████████     ███      ███     ███     ████     ███     ███           
+                                            ███      ███  █  ███     ████     ███     ███           
+                                 █     █    ███      ███    ████     ████     ███     ███           
+                                 █ █  █    ████  █ █ ███ █ █ ███ █   ████     ███     ███           
+           ████████████████████     ███████████      ███     ███    █████     ███████████           
+           ████████████████████     ███████████      ███     ███     ████     ███████████           
+           ███                      ███                      ███     ████             ███           
+           ███                      ███                      ███     ████             ███           
+           ███      ██████████      ███      ██      ██      ███     ███████████      ███           
+           ███     ████████████     ███     ███      ███     ███     ████████████     ███           
+           ███     ███              ███     ███      ███     ███              ███     ███           
+           ███     ███              ███     ███      ███     ███              ███     ███           
+           ███     ███              ███     ███      ███     ███              ███     ███           
+           ███     ████████████████████     ███      ████████████████████     ███     ███           
+           ███     ████████████████████     ███      ████████████████████     ███     ███           
+           ███     ███              ███     ███                               ███     ███           
+           ███     ███              ███     ███                               ███     ███           
+           ███     ███              ███     ███                               ███     ███           
+           ███     ████████████     ███     █████████████████████████████     ███     ███           
+           ███                                               ███                      ███           
+           ███                                               ███                      ███           
+           ███                                               ███                      ███           
+           ██████████████████████████████████████████████████████████████████████████████           
+           ██████████████████████████████████████████████████████████████████████████████ 
+        """
 nom = input("Ingresa tu nombre: ")
 print("Cargando...")
 time.sleep(2) 
