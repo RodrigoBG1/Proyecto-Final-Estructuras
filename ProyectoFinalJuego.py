@@ -95,12 +95,12 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             "mensaje": "Has elegido cabar un tunel, ahora puede que los caluclos fallen, puedes ver el mapa o seguir, puedes ver mapa o seguir",
             "opciones": {
                 "mapa": self.mapa,
-                "seguir": "FUSIL/ESCOPETA"
+                "seguir": "arma"
             }
             },
         
             
-        "tunel": {
+        "arma": {
             "mensaje": "Para seguir con el plan, escoge tus armas(Debido a que tu atraco es por tunel solo puedes escoger 2 armas): \n\t\t\t\t\t\t\t-Fusil \n\t\t\t\t\t\t\t-Escopeta \n\t\t\t\t\t\t\t-Subfusil \n\t\t\t\t\t\t\t-Bombas",
             "opciones": {
                 "fusil y escopeta": "FUSIL/ESCOPETA",
@@ -252,10 +252,10 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
           █ ██                             ███           █        █               █               █               
           █ ██                             ███           █        █               █               █               
           █ ██                             ███           █        █               █               █               
-          █ ██                             ███           █        █                               █               
+          █ ██                             ███           █        █               █               █               
           █ ██                             ███           █        █               █               █               
           █ ██                             ███                                    █               █               
-          █ ██                             ███                                    █           ██████████         
+          █ ██                             ███             cajas                  █           ██████████         
           █ ██                             ███                                    █                            
           █ ██                              ██████████████████                  ███            Entrada                
           █ ██                            █████████   Entrada                                 principal                  
@@ -265,14 +265,14 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
           █ ██                             ███                █                                   █               
           █ ██                             ███                █                                   █                
           █ ██                             ███                █                                   █
-          █ ██                             ███                █               ofic                █        
+          █ ██                             ███    ejecutivo   █             oficinas              █        
           █ ██                             ███                █                                   █               
           █ ██                             ███                █                                   █               
           █ ██                             ███                                                    █               
           █ ███████████████████████████████████████████████████████████████████████████████████████                                                                          
         """
         print(mapa)
-        print("Escrive seguir para avanzar")
+        print("Escribe seguir para avanzar")
         
     def laverinto(self):
         laverinto = """
@@ -283,7 +283,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ███                      ███                                               ███           
            ███     ████████████     ███     █████████████████████████████     ███████████           
            ███             ████             ███                      ████     ███                   
-           ███             ████             ███                      ████     ███                   
+           ███             ████             ███                      ████     ███    salida               
            ███             ████             ███                      ████     ███                   
            ████████████████████     ████████████████████████████     ████████████     ███           
            ████████████████████     ████████████████████████████     ████████████     ███           
@@ -296,14 +296,14 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ███     ███     ████     ███              ███     ███     ████     ███     ███           
            ███     ████████████████████     ███      ███     ███     ████     ███     ███           
            ███     ████████████████████     ███      ███     ███     ████     ███     ███           
-                                            ███      ███  █  ███     ████     ███     ███           
-                                 █     █    ███      ███    ████     ████     ███     ███           
-                                 █ █  █    ████  █ █ ███ █ █ ███ █   ████     ███     ███           
-           ████████████████████     ███████████      ███     ███    █████     ███████████           
+                                            ███      ███     ███     ████     ███     ███           
+       Entrada                              ███      ███     ███     ████     ███     ███           
+                                            ███      ███     ███     ████     ███     ███           
+           ████████████████████     ███████████      ███     ███     ████     ███████████           
            ████████████████████     ███████████      ███     ███     ████     ███████████           
            ███                      ███                      ███     ████             ███           
            ███                      ███                      ███     ████             ███           
-           ███      ██████████      ███      ██      ██      ███     ███████████      ███           
+           ███      ██████████      ███     ███      ███     ███     ███████████      ███           
            ███     ████████████     ███     ███      ███     ███     ████████████     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
@@ -320,6 +320,24 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ██████████████████████████████████████████████████████████████████████████████           
            ██████████████████████████████████████████████████████████████████████████████ 
         """
+        des ={
+            "inicio": {
+            "mensaje": "Te has perdido en las oficinas, y es necesario salir para continuar con la mision, para esto tendras que poner a para arriba, d para derecha, h para ir abajo e i para ir a la   izquierda ",
+            "opciones": {
+                "a": "inici",
+                "d": "c",
+                    }
+                },
+            "c": {
+            "mensaje": "",
+            "opciones": {
+                "d": "inici",
+                "i": "inici",
+                "s": "c",
+                    }
+        }
+        } 
+    
 nom = input("Ingresa tu nombre: ")
 print("Cargando...")
 time.sleep(2) 
