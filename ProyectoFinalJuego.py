@@ -1,5 +1,6 @@
 import os
 import time
+import random
 Titulo = """
 $$$$$$$\                      $$\                        $$\     $$\                         $$\       
 $$  __$$\                     $$ |                       $$ |    $$ |                        $$ |      
@@ -71,13 +72,51 @@ MOOMMMMOMMOMMOOMMMOObTSSg._.SSS._.PdOPdMOOMMMMOMMMMOMMMMOOM
 MMOMMMMOMMMOMMOOMMbT8bTSSSSSSSSSPd8OPdOOOMMMMOOMMMMOMMMOOMM
 MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         return dialogo.format(mensaje)
+    
+    def game_over(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        game_over = """ 
         
+        
+        
+        
+        
+                                                                                                                    
+                                             ██████████████          ████████         ██████        █████    ████████████████████ 
+                                             ███████████████        █████████         ██████        ██████   ████████████████████ 
+                                          ███████                ███████  ██████      █████████  █████████   ██████
+                                        █████████              █████████  █████████   ████████████████████   ██████ 
+                                        ██████                 ██████        ██████   ████████████████████   ██████████████ 
+                                        ██████     █████████   ██████        ██████   ████████████████████   ███████████████
+                                        ██████     █████████   ████████████████████   ████████████████████   ███████
+                                        ██████▓       ██████   ████████████████████   ██████  ████  ██████   ██████
+                                          ▒██████     ██████   ██████        ██████   ██████        ██████   ██████                   
+                                           █████████████████   ██████        ██████   ██████        ██████   ████████████████████
+                                             ███████████████   ██████        ██████   ██████        ██████   ████████████████████    
+                                                
+                                                                                                                                                                                                                    
+                                           █████████████       ██████        █████    ████████████████████   █████████████████
+                                          ███████████████      ██████        ██████   ████████████████████   █████████████████
+                                        ██████        ██████   ██████        ██████   ██████                 ██████       ███████ 
+                                        ██████        ██████   ██████        ██████   ██████                 ██████       ███████
+                                        ██████        ██████   ██████        ██████   ██████████████         ██████       ███████
+                                        ██████        ██████   █████████  █████████   ███████████████        ██████     █████████ 
+                                        ██████        ██████   ███████████████████    ██████████████         ███████████████████ 
+                                        ██████        ██████     ███████████████      ██████                 ███████████████ 
+                                        ██████        ██████        █████████         ██████                 ██████  █████████
+                                        ███████████████████          ████████         ████████████████████   ██████  ████████████ 
+                                          ███████████████              ████           ████████████████████   ██████     █████████ 
+                                                                                                                                                    
+        """
+        print(game_over)
+        exit()
         
     def __init__(self, nom):
         self.nom = nom
+        self.vidas = 3
         self.decisiones = {
 "inicio": {
-    "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \n\t\t\t\t\t\tcreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?".format(self.nom),
+    "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \n\t\t\t\t\t\tcreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?(Mexico, Buenos Aires)".format(self.nom),
     "opciones": {
         "mexico": "Mexico",
         "buenos aires": "Buenos Aires"
@@ -86,8 +125,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
     "Mexico": {
         "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cabar un tunel \n\t\t\t\t\t\t\t- Asalto a mano armada",
         "opciones": {
-            "tunel": self.j,
-            "regresar": "tunel",
+            "tunel":  "tunel",
             "mano": "mano"
         }
             },
@@ -95,67 +133,27 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             "mensaje": "Has elegido cabar un tunel, ahora puede que los caluclos fallen, puedes ver el mapa o seguir, puedes ver mapa o seguir",
             "opciones": {
                 "mapa": self.mapa,
-                "seguir": "arma"
+                "seguir": "laverinto"
             }
             },
-        
             
-        "arma": {
-            "mensaje": "Para seguir con el plan, escoge tus armas(Debido a que tu atraco es por tunel solo puedes escoger 2 armas): \n\t\t\t\t\t\t\t-Fusil \n\t\t\t\t\t\t\t-Escopeta \n\t\t\t\t\t\t\t-Subfusil \n\t\t\t\t\t\t\t-Bombas",
-            "opciones": {
-                "fusil y escopeta": "FUSIL/ESCOPETA",
-                "escopeta y fusil": "FUSIL/ESCOPETA",
-
-                "fusil y subfusil": "FUSIL/SUBFUSIL",
-                "subfusil y fusil": "FUSIL/SUBFUSIL",
-
-                "fusil y bombas": "FUSIL/BOMBAS",
-                "bombas y fusil": "FUSIL/BOMBAS",
-
-                "escopeta y subfusil": "ESCOPETA/SUBFUSIL",
-                "subfusil y escopeta": "ESCOPETA/SUBFUSIL",
-
-                "escopeta y bombas": "ESCOPETA/BOMBAS",
-                "bombas y escopeta": "ESCOPETA/BOMBAS",
-
-                "subfusil y bombas": "SUBFUSIL/BOMBAS",
-                "bombas y subfusil": "SUBFUSIL/BOMBAS",
-            }
-            },
-                "FUSIL/ESCOPETA": 
-                {
-                    "mensaje": "Elegiste fusil y escopeta, para finalizar el plan del golpe necesitas escoger tu vehiculo de escape",
-                    "opciones":
-                    {
-                        "carro": "Carro",
-                        "moto": "Moto",
-                        "camion": "Camion",
-                        "helicoptero": "Helicop",
-                    }
-                },
-                    "Carro":
-                    {
-                        "mensaje": "Ya has hecho tu tunel y has aparecido en el sotano, el dinero se encuentra en la caja fuerte pasando las oficinas, te alistas \n\t\t\t\t\t\t y subes las escaleras un guardia viene caminando, que decides hacer?",
+                    "laverinto":{
+                        "mensaje": "Es momento de iniciar el atraco, no sabemos con exactitud donde saldra el tunel asi que tienes que estar preparado para todo, escribe vamos ",
                         "opciones": 
                         {
-                            "disparar": "Disparar",
-                            "esconderme": "Esconder",
-                            "golpear": "Golpear",
+                            "vamos":  self.laverinto,
+                            "seguir": "donde",
                         }
                     },
-                        "Disparar":
+                    "donde":{
+                        "mensaje": "Hemos salido del laverinto, es hora de dirigirnos a la caja fuerte pero hay que pasar por desapercibido, hay eu intenttar no ser vistos por las camaras, escribe adelante para poder seguir",
+                        "opciones": 
                         {
-                            "mensaje": "Alertaste a los policias y te metieron a la carcel, para repetir esa parte escribe 'Repetir'",
-                            "opciones": 
-                            {"repetir": "Carro"}
-                        },
-
-                        "Esconder":
-                        {
-                            "mensaje": "Listo, el policia se fue y no te vio, ahora camina por el pasillo...\n\t\t\t\t\t\tTerminando el pasillo del lado izquierdo", 
-                        },
-                    "Golpear":
-                    {
+                            "adelante": "polla",
+                            "ejecutivo": "Esconder",
+                        }
+                    },
+                    "Golpear":{
                         "mensajeje":"Listo ya tienes un policia menos, que te esta",
                         "opciones": 
                         {
@@ -165,45 +163,34 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                         }
                     },
 
-                "FUSIL/SUBFUSIL":
-                {
-
-                },
-
-                "FUSIL/BOMBAS":
-                {
-
-                },
-
-                "ESCOPETA/SUBFUSIL":
-                {
-
-                },
-
-                "ESCOPETA/BOMBAS":
-                {
-
-                },
-
-                "SUBFUSIL/BOMBAS":
-                {
-
-                },
-
         "mano": {
-            "mensaje": "¡Has encontrado un tesoro! ¿Lo tomas o lo dejas?",
+            "mensaje": "Haz elegido hacer el atraco a mano armada, por lo que se te asignara un sufusil ",
             "opciones": {
                 "toma": "fin",
                 "deja": "inicio"
             }
         },
-    "Buenos Aires": {
-        "mensaje": "Bienvenido a la mision de Buenos Aires, ",
-        "opciones": {
-            "toma": "fin",
-            "deja": "inicio"
-        }
-    },
+"Buenos Aires": {
+    "mensaje": "Che {} bienvenido a la mision de atraco de Buenos Aires, para este atracto tenemos tres opciones: \n\t\t\t\t\t\t\t - Captura de rehenes \n\t\t\t\t\t\t\t - Hackea la base de datos".format(self.nom),
+    "opciones": {
+        "rehen":  "rehen",
+        "hack": "hack"
+    }
+            },
+        "rehen": {
+            "mensaje": "Has decidido tomar rehenes, por lo que tendremos que actuar de manera rapida en un inicio, y despus resistir, para empezar ",
+            "opciones": {
+                "rehen":  "rehen",
+                "hack": "hack"
+    }
+            },
+        "hack": {
+            "mensaje": "Has decidido la opcion de hackear la base de datos del banco, asi podremos recuperar datos y usarlso a tu favor ",
+            "opciones": {
+                "rehen":  "rehen",
+                "hack": "hack"
+    }
+            },
             "fin": {
                 "mensaje": "El juego ha terminado. ¿Quieres jugar de nuevo?",
                 "opciones": {
@@ -223,24 +210,34 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print(mensaje)
 
     def jugar(self):
-        decision = self.decisiones[self.estado_actual]
-        self.mostrar_dialogo(decision["mensaje"])
-        while True:
-            respuesta = input().lower() 
-            for opcion, estado in decision["opciones"].items():
-                if opcion in respuesta:
-                    if callable(estado):  # Verifica si es una función antes de llamarla
-                        estado()
-                    else:
-                        self.estado_actual = estado
-                        decision = self.decisiones[self.estado_actual]
-                        self.mostrar_dialogo(decision["mensaje"])
-                    break
-                    """self.estado_actual = estado
-                    break"""
-            if not self.estado_actual:
-                break
+            decision = self.decisiones[self.estado_actual]
+            self.mostrar_dialogo(decision["mensaje"])
+            while True:
+                respuesta = input().lower() 
+                for opcion, estado in decision["opciones"].items():
+                    if opcion in respuesta:
+                        if callable(estado):  # Verifica si es una función antes de llamarla
+                            estado()
+                        else:
+                            # Verifica y actualiza las vidas después de cada decisión
+                            if "vidas" in decision:
+                                self.vidas += decision["vidas"]
+                            
+                            # Verifica si se ha agotado el número de vidas
+                            if self.vidas <= 0:
+                                print("Has perdido todas tus vidas. ¡Fin del juego!")
+                                self.estado_actual = None
+                                print(self.game_over())
+                                break
+                            else: 
+                                self.estado_actual = estado
+                                decision = self.decisiones[self.estado_actual]
+                                self.mostrar_dialogo(decision["mensaje"])
 
+                        break
+                if not self.estado_actual:
+                    break
+    
     def j(self):
         print("hola")
         
@@ -257,11 +254,11 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
           █ ██                             ███                                    █               █               
           █ ██                             ███             cajas                  █           ██████████         
           █ ██                             ███                                    █                            
-          █ ██                              ██████████████████                  ███            Entrada                
+          █ ██                            ████████████████████                  ███            Entrada                
           █ ██                            █████████   Entrada                                 principal                  
           █ ██          Bobeda            █████████    a la                                                        
           █ ██                            █████████   bobeda                                  ██████████              
-          █ ██                              ███████████████████      ███████████████████████      █               
+          █ ██                            █████████████████████      ███████████████████████      █               
           █ ██                             ███                █                                   █               
           █ ██                             ███                █                                   █                
           █ ██                             ███                █                                   █
@@ -269,7 +266,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
           █ ██                             ███                █                                   █               
           █ ██                             ███                █                                   █               
           █ ██                             ███                                                    █               
-          █ ███████████████████████████████████████████████████████████████████████████████████████                                                                          
+          █████████████████████████████████████████████████████████████████████████████████████████                                                                          
         """
         print(mapa)
         print("Escribe seguir para avanzar")
@@ -279,16 +276,16 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ██████████████████████████████████████████████████████████████████████████████           
            ██████████████████████████████████████████████████████████████████████████████           
            ███                      ███                                               ███           
-           ███                      ███                                               ███           
+           ███                      ███                                    k          ███           
            ███                      ███                                               ███           
            ███     ████████████     ███     █████████████████████████████     ███████████           
            ███             ████             ███                      ████     ███                   
-           ███             ████             ███                      ████     ███    salida               
+           ███             ████    i    j   ███                      ████     ███    salida               
            ███             ████             ███                      ████     ███                   
            ████████████████████     ████████████████████████████     ████████████     ███           
            ████████████████████     ████████████████████████████     ████████████     ███           
            ███             ████                              ███                      ███           
-           ███             ████                              ███                      ███           
+           ███             ████    g                         ███  n                l  ███           
            ███             ████                              ███                      ███           
            ███     ███     ████     ████████████████████     ███     ████████████     ███           
            ███     ███     ████     ████████████████████     ███     ████████████     ███           
@@ -297,13 +294,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ███     ████████████████████     ███      ███     ███     ████     ███     ███           
            ███     ████████████████████     ███      ███     ███     ████     ███     ███           
                                             ███      ███     ███     ████     ███     ███           
-       Entrada                              ███      ███     ███     ████     ███     ███           
+       Entrada   a               b          ███      ███     ███     ████     ███     ███           
                                             ███      ███     ███     ████     ███     ███           
            ████████████████████     ███████████      ███     ███     ████     ███████████           
            ████████████████████     ███████████      ███     ███     ████     ███████████           
            ███                      ███                      ███     ████             ███           
-           ███                      ███                      ███     ████             ███           
-           ███      ██████████      ███     ███      ███     ███     ███████████      ███           
+           ███                  c   ███           f          ███     ████             ███           
+           ███      ██████████      ███████████      ███     ███     ███████████      ███           
            ███     ████████████     ███     ███      ███     ███     ████████████     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
@@ -311,33 +308,92 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ███     ████████████████████     ███      ████████████████████     ███     ███           
            ███     ████████████████████     ███      ████████████████████     ███     ███           
            ███     ███              ███     ███                               ███     ███           
-           ███     ███              ███     ███                               ███     ███           
+           ███     ███              ███     ███                             m ███     ███           
            ███     ███              ███     ███                               ███     ███           
            ███     ████████████     ███     █████████████████████████████     ███     ███           
            ███                                               ███                      ███           
-           ███                                               ███                      ███           
+           ███                   d        e                  ███                      ███           
            ███                                               ███                      ███           
            ██████████████████████████████████████████████████████████████████████████████           
            ██████████████████████████████████████████████████████████████████████████████ 
         """
-        des ={
-            "inicio": {
-            "mensaje": "Te has perdido en las oficinas, y es necesario salir para continuar con la mision, para esto tendras que poner a para arriba, d para derecha, h para ir abajo e i para ir a la   izquierda ",
-            "opciones": {
-                "a": "inici",
-                "d": "c",
-                    }
-                },
-            "c": {
-            "mensaje": "",
-            "opciones": {
-                "d": "inici",
-                "i": "inici",
-                "s": "c",
-                    }
-        }
-        } 
+        print(laverinto)
+        print("Has salido por la oficinas, pero te has quedado atorado, es momento de salir")
+        print("tendras que poner a para arriba, d para derecha, h para ir abajo e i para ir a la   izquierda ")
+        c = input("Inicias en 'a' a donde vas?")
+        if self.vidas > 0:
+            if c  == "d":
+                    d = input("Estas en 'b' a donde vas?")
+                    if d == "d":
+                            e = input("Estas en 'f' a donde vas?")
+                            if e == "h":
+                                    f = input("Estas en 'm' a donde vas?")
+                                    if f == "a":
+                                            g = input("Estas en 'n' a donde vas?")
+                                            if g == "d":
+                                                    h = input("Estas en 'l' a donde vas?")
+                                                    if h == "a":
+                                                        print("has salido de las oficinas Felicidades, escribe seguir par continuar") 
+                                            else:
+                                                    self.vidas -= 1
+                                                    print("Intentalo una vez mas")
+                                                    self.laverinto()
+                                    else:
+                                            self.vidas -= 1
+                                            print("Intentalo una vez mas")
+                                            self.laverinto()
+                            else:
+                                    self.vidas -= 1
+                                    print("Intentalo una vez mas")
+                                    self.laverinto()
+                    else:
+                            self.vidas -= 1
+                            print("Intentalo una vez mas")
+                            self.laverinto()
+            else: 
+                    self.vidas -= 1
+                    print("Intentalo una vez mas")
+                    self.laverinto()          
+        else:
+            self.game_over()
+        
+
+    def j2(self):
+        print("TE HAN ATRAPADOOOO!")
+        print("Para escapar escribe un número del 1 al 7, generaremos un número al azar, si coincide con el tuyo PIERDES si no coincide GANARAS")
+        a = input("Escribe tu numero: ")
+        x = random.randint(1, 7)
     
+        if x == a:
+            print("Lo siento, perdiste")
+        else:
+            print("Ufff, por poco pierdes, escribe 'regresar' para continuar")
+            
+            
+    def j3(self):
+        print("Has entrado a un minijuego\n En esta ocasión entraras en combate con un policia")
+        print("Instrucciones: Oprime la letra que aparezca en pantalla para dispararle, si te equivocas él te disparará y te quitara vida")
+        print("Comencemos...")
+        time.sleep(7)
+        vida_oponente = 10
+        while vida_oponente > 0 and self.vidas > 0:
+            x = chr(random.randint(97, 122))
+            print(x)
+            a = input("Dispara ")
+            if a == x:
+                vida_oponente -= 1
+            else:
+                self.vidas -= 1
+        if self.vidas > 0:
+            print("Felicidades!!!")
+            print("Haz completado la prueba, escribe 'regresar' para continuar")
+            print("Vidas: ", self.vidas)
+        else:
+            print("Lo siento, tus vidas se han acabado")
+            #Que te mande al GAME OVER   
+            
+        
+        
 nom = input("Ingresa tu nombre: ")
 print("Cargando...")
 time.sleep(2) 
