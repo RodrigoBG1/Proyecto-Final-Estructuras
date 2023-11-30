@@ -182,7 +182,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                     "opciones":
                                     {
                                         "abajo": self.decifrar_caja_fuerte,
-                                        "izquierda": self.minijuego, #NO SE SI PONER OTRO MINIJUEGO AQUI ME QUEDE
+                                        #"izquierda": self.minijuego, #NO SE SI PONER OTRO MINIJUEGO AQUI ME QUEDE
                                         "arriba": self.perder_vida,
                                         "derecha": self.perder_vida,
                                         "regresar": "Donde"
@@ -192,7 +192,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             "mensaje": "Haz elegido hacer el atraco a mano armada, por lo que se te asignara un sufusil, quieres ver el mapa antes de entrar o quieres seguir?",
             "opciones": {
                 "mapa": self.mapa2,
-                "seguir": "Atraco"
+                "seguir": self.mini_juego_mano0,
             }
         },
 
@@ -315,7 +315,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
           █ ██                             ███           █        █                               █               
           █ ██                             ███           █        █               █               █               
           █ ██                             ███           █        █               █               █               
-          █ ██       No se como ponerle                  █        █               █               █            
+          █ ██      #No se como ponerle                  █        █               █               █            
           █ ██                                                                    █               █               
           █ ██                             ███             cajas                  █              ██████████         
           █ ██                             ███                                    █                            
@@ -345,13 +345,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ███                      ███                                               ███           
            ███     ████████████     ███     █████████████████████████████     ███████████           
            ███             ████             ███                      ████     ███                   
-           ███             ████    i    j   ███                      ████     ███    salida               
+           ███     p       ████    i    j   ███                      ████     ███    salida               
            ███             ████             ███                      ████     ███                   
            ████████████████████     ████████████████████████████     ████████████     ███           
            ████████████████████     ████████████████████████████     ████████████     ███           
            ███             ████                              ███                      ███           
-           ███             ████    g                         ███  n                l  ███           
-           ███             ████                              ███                      ███           
+           ███             ████    g                         ███  q                y  ███           
+           ███             ████                           r  ███                      ███           
            ███     ███     ████     ████████████████████     ███     ████████████     ███           
            ███     ███     ████     ████████████████████     ███     ████████████     ███           
            ███     ███     ████     ███              ███     ███     ████     ███     ███           
@@ -364,13 +364,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ████████████████████     ███████████      ███     ███     ████     ███████████           
            ████████████████████     ███████████      ███     ███     ████     ███████████           
            ███                      ███                      ███     ████             ███           
-           ███                  c   ███           f          ███     ████             ███           
+           ███                  c   ███           f          ███     ████          c  ███           
            ███      ██████████      ███████████      ███     ███     ███████████      ███           
            ███     ████████████     ███     ███      ███     ███     ████████████     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
            ███     ███              ███     ███      ███     ███              ███     ███           
-           ███     ████████████████████     ███      ████████████████████     ███     ███           
+           ███  h  ████████████████████     ███      ████████████████████     ███     ███           
            ███     ████████████████████     ███      ████████████████████     ███     ███           
            ███     ███              ███     ███                               ███     ███           
            ███     ███              ███     ███                             m ███     ███           
@@ -383,25 +383,21 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
            ██████████████████████████████████████████████████████████████████████████████ 
         """
         print(laverinto)
-        print("Has salido en la sala de ejecutivos, pero te has quedado atorado, es momento de salir")
-        print("Tendrás que salir del laverinto para poder continuar, \nPresiona la letra'a' para arriba, 'd' para derecha, 'h' para ir abajo e 'i' para ir a la izquierda ")
+        print("Has salido por la oficinas, pero te has quedado atorado, es momento de salir")
+        print("Escribe la letra a la que te quieres dirigir")
+        print("Intentos restantes:", self.vidas)
         c = input("Inicias en 'a' a donde vas?")
-        if self.vidas > 0:
-            if c  == "d":
+        if self.vidas -1 > 0:
+            if c  == "b":
                     d = input("Estas en 'b' a donde vas?")
-                    if d == "d":
+                    if d == "f":
                             e = input("Estas en 'f' a donde vas?")
-                            if e == "h":
+                            if e == "m":
                                     f = input("Estas en 'm' a donde vas?")
-                                    if f == "a":
-                                            g = input("Estas en 'n' a donde vas?")
-                                            if g == "d":
-                                                    h = input("Estas en 'l' a donde vas?")
-                                                    if h == "a":
-                                                        print("has salido de la sala de ejecutivos Felicidades, escribe seguir para continuar")
-                                                        x = random.randint(0,9)
-                                                        print("El número de esta sección es el:", x)
-                                                        self.codigo_caja_fuerte += x
+                                    if f == "q":
+                                            g = input("Estas en 'q' a donde vas?")
+                                            if g == "y":
+                                                print("has salido de las oficinas Felicidades, escribe seguir par continuar") 
                                             else:
                                                     self.vidas -= 1
                                                     print("Intentalo una vez mas")
@@ -424,6 +420,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                     self.laverinto()          
         else:
             self.game_over()
+        
 
     def perder_vida(self):
         self.vidas -= 1
@@ -883,6 +880,55 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         else:
             print("Lo siento, tus vidas se han acabado")
             #Que te mande al GAME OVER   
+            
+            
+    def mover_jugador(self, posicion_jugador, pasos):
+        return posicion_jugador + pasos
+
+    def detectar_camara(self, posiciones_camaras, posicion_jugador):
+        for posicion_camara in posiciones_camaras:
+            if posicion_camara in range(posicion_jugador, posicion_jugador + 1 ):
+                return True
+        return False
+
+    def mini_juego_mano0(self):
+        posicion_jugador = 0
+        rango_vision = 10
+        pasos_totales = 0
+        contador_multiplo = 5
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        print("\n\nHas logrado pasar por cajas, pero se acerca el pasillo donde hay mayor vigilancia, vas a tener que escabar de las camaras de suguridad")
+        print("\tPara ello hemos tomado un registro de la ubicacion de las camaras de suguridad, y hemos notado que tienen un patron ")
+        print("\tla primer camara se encuentra a un rango de 2 pasos, te iremos dando la informacion conforme vayas avanzando")
+        print("\t¡Cuidado! si te detectan te atraparan y perderas una vida en el juego\n\n")
+        
+        while True:
+            posiciones_camaras = list(range(0, 20, 2)) + list(range(20, 38, 3)) + list(range(38, 63, 5)) + list(range(63, 85, 7))
+            
+            pasos = int(input("¿Cuántos pasos quieres moverte? "))
+            posicion_jugador = self.mover_jugador(posicion_jugador, pasos)
+            pasos_totales += pasos
+            
+            if self.detectar_camara(posiciones_camaras, posicion_jugador):
+                print("¡Has sido atrapado por una cámara de seguridad!")
+                self.vidas -= 1
+                self.game_over()
+                return    
+                
+            if pasos < 20:
+                print("Sigues en un rango de camara por cada dos pasos")
+            elif pasos > 20 and pasos < 38:
+                print("Ahora estas en un rango de camara por cada tres pasos")
+            elif pasos > 38 and pasos < 63:
+                print("Ahora estas en un rango de camara por cada cinco pasos")
+            elif pasos > 63 and pasos < 84:
+                print("Ahora estas en un rango de camara por cada siete pasos")
+
+            if pasos_totales >= 80:
+                print("¡Felicidades! Has dado 100 pasos sin ser atrapado por una cámara de seguridad.")
+                return
             
         
         
