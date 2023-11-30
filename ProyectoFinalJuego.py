@@ -3,6 +3,7 @@ import time
 import random
 import threading
 import tkinter as tk
+from itertools import islice
 
 Titulo = """
 $$$$$$$\                      $$\                        $$\     $$\                         $$\       
@@ -182,7 +183,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                     "opciones":
                                     {
                                         "abajo": self.decifrar_caja_fuerte,
-                                        #"izquierda": self.minijuego, #NO SE SI PONER OTRO MINIJUEGO AQUI ME QUEDE
+                                        "izquierda": self.perder_vida,
                                         "arriba": self.perder_vida,
                                         "derecha": self.perder_vida,
                                         "regresar": "Donde"
@@ -192,18 +193,49 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             "mensaje": "Haz elegido hacer el atraco a mano armada, por lo que se te asignara un sufusil, quieres ver el mapa antes de entrar o quieres seguir?",
             "opciones": {
                 "mapa": self.mapa2,
-                "seguir": self.mini_juego_mano0,
+                "seguir": "Atraco"
             }
         },
 
             "Atraco": {
                 "mensaje": "Perfecto, has llegado por la entrada principal y disparas alteradamente hacía el techo para avisar que llegaste jeje,\n\t\t\t\t\t\t\tAhora te diriges a las cajas, escribe 'continuar'",
                 "opciones":{
-                    "continuar": self.mini,
+                    "continuar": self.minijuego_mano_0,
+                    "seguir": "Pasillo"
                 }
             },
 
+                "Pasillo": {
+                    "mensaje": "Excelente, después de sacar un poco de dinero ahora te encuentras en un pasillo lleno de cámaras y para llegar a la bóbeda a fuerzas tienes que pasar por el,\n\t\t\t\t\t\t\t escribe 'vamos' para avanzar por el pasillo",
+                    "opciones":{
+                        "vamos": self.minijuego_mano_1,
+                        "avanzar": "Oficinas"
+                    }
+                },
 
+                    "Oficinas":{
+                        "mensaje": "Pasaste el pasillo exitosamente, ahora has llegado a las oficinas y hay un grupo de policias, en esta ocasión tendrás que dispararles, escribe 'disparar' para empezar el juego",
+                        "opciones": {
+                            "disparar": self.minijuego_mano_2,
+                            "regresar": "Ejecutivo"
+                        }
+                    },
+
+                        "Ejecutivo":{
+                            "mensaje": "Felicidades, le has disparado a todos los policias, ahora vamos a la última sección para abrir la bóveda, escribe 'continuar'",
+                            "opciones":{
+                                "continuar": self.minijuego_mano_3,
+                                "regresar": "BombaOculta"
+                            }
+                        },
+
+                            "BombaOculta":{
+                                "mensaje": "Excelente, ahora tienes que pasar la sección de seguridad para poder abrir la bóveda, escribe 'avanzar' para ir a la última sección",
+                                "opciones":{
+                                    "avanzar": self.minijuego_mano_4,
+                                    "decifrar": self.decifrar_caja_fuerte
+                                }
+                            },
 
 "Buenos Aires": {
     "mensaje": "Che {} bienvenido a la mision de atraco de Buenos Aires, para este atracto tenemos tres opciones: \n\t\t\t\t\t\t\t - Captura de rehenes \n\t\t\t\t\t\t\t - Hackea la base de datos".format(self.nom),
@@ -289,13 +321,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
           █ ██                             ███                                    █               █               
           █ ██                             ███             Cajas                  █              ██████████         
           █ ██                             ███                                    █                            
-          █ ██████████████████████████████████      ███████████████████████████████                Entrada                
-          █ ██                             ███                                  ███               principal                  
-          █ ██                             ███             Pasillo              ███                                   
+          █ ███████ ████████ █████████████████      ███████████████████████████████                Entrada                
+          █ ██      ████████               ███                                  ███               principal                  
+          █ ██      ████████               ███             Pasillo              ███                                   
           █ ██                             ███                                  ███              ██████████              
           █ ██                             ██████████████████████████████       ███████████████████████████               
-          █ ██                             ███                █                                   █               
-          █ ██  No se como ponerle         ███                █                                   █                
+          █ ██                                                █                                   █               
+          █ ██        Seguridad                               █                                   █                
           █ ██                             ███                █                                   █
           █ ██                             ███    ejecutivo   █             oficinas              █        
           █ ██                             ███                █                                   █               
@@ -397,11 +429,14 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                     if f == "q":
                                             g = input("Estas en 'q' a donde vas?")
                                             if g == "y":
-                                                print("has salido de las oficinas Felicidades, escribe seguir par continuar") 
+                                                print("Has salido de las oficinas Felicidades, escribe seguir par continuar")
+                                                x = random.randint(0,9)
+                                                print("El número de esta sección es el:", x)
+                                                self.codigo_caja_fuerte += x
                                             else:
-                                                    self.vidas -= 1
-                                                    print("Intentalo una vez mas")
-                                                    self.laverinto()
+                                                self.vidas -= 1
+                                                print("Intentalo una vez mas")
+                                                self.laverinto()
                                     else:
                                             self.vidas -= 1
                                             print("Intentalo una vez mas")
@@ -789,13 +824,137 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
 
 
+    def minijuego_mano_0(self):
+        class ClickGame:
+            def __init__(self, ventana):
+                self.ventana = ventana
+                self.ventana.title("Click Game")
+
+                self.label = tk.Label(ventana, text="Haz clic en el botón")
+                self.label.pack(pady=10)
+
+                self.button = tk.Button(ventana, text="¡Clic aquí!", command=self.on_button_click)
+                self.button.pack(pady=20)
+
+                self.click_count = 0
+                self.start_time = None
+                self.click_count2 = 0
+                self.start_time2 = None
+
+            def on_button_click(self):
+                if self.start_time is None:
+                    self.start_time = time.time()
+                    self.ventana.after(10000, self.change_botton)  # Juego de 10 segundos
+                self.click_count += 1
+            
+            def change_botton(self):
+                self.button.config(state=tk.DISABLED)  
+                self.button2 = tk.Button(ventana, text="¡Clic aquí!", command=self.on_button_click)
+                self.button2.pack(padx = 30, pady=20)
+                if self.start_time2 is None:
+                    self.start_time2 = time.time() 
+                    self.ventana.after(10000, self.end_game)  # Juego de 10 segundos
+                self.click_count2 += 1
+
+            def end_game(self):
+                cps = self.click_count + self.click_count2  # Clics por segundo
+                self.label.config(text= "Fin del juego\nClics totales: " + str(cps))
+                self.button2.config(state=tk.DISABLED)  # Desactivar el botón después del juego
+                print("Felicidades, pasaste las cajas y robaste $", cps*1999)
+
+        if __name__ == "__main__":
+            ventana = tk.Tk()
+            game = ClickGame(ventana)
+            ventana.mainloop()
+        print("Escribe 'seguir' para continuar")
+        x = random.randint(0,9)
+        print("El número de esta sección es el:", x)
+        self.codigo_caja_fuerte += x
 
 
+    def mover_jugador(self, posicion_jugador, pasos):
+        return posicion_jugador + pasos
+
+    def detectar_camara(self, posiciones_camaras, posicion_jugador):
+        for posicion_camara in posiciones_camaras:
+            if posicion_camara in range(posicion_jugador, posicion_jugador + 1 ):
+                return True
+        return False
+
+    def minijuego_mano_1(self):
+        posicion_jugador = 0
+        rango_vision = 10
+        pasos_totales = 0
+        contador_multiplo = 5
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        print("\n\nHas logrado pasar por cajas, pero se acerca el pasillo donde hay mayor vigilancia, vas a tener que escabar de las camaras de suguridad")
+        print("\tPara ello hemos tomado un registro de la ubicacion de las camaras de suguridad, y hemos notado que tienen un patron ")
+        print("\tla primer camara se encuentra a un rango de 2 pasos, te iremos dando la informacion conforme vayas avanzando")
+        print("\t¡Cuidado! si te detectan te atraparan y perderas una vida en el juego\n\n")
+        
+        while True:
+            posiciones_camaras = list(range(0, 20, 2)) + list(range(20, 38, 3)) + list(range(38, 63, 5)) + list(range(63, 85, 7))
+            
+            pasos = int(input("¿Cuántos pasos quieres moverte? "))
+            posicion_jugador = self.mover_jugador(posicion_jugador, pasos)
+            pasos_totales += pasos
+            
+            if self.detectar_camara(posiciones_camaras, posicion_jugador):
+                print("¡Has sido atrapado por una cámara de seguridad!")
+                self.vidas -= 1
+                self.game_over()
+                return    
+                
+            if pasos < 20:
+                print("Sigues en un rango de camara por cada dos pasos")
+            elif pasos > 20 and pasos < 38:
+                print("Ahora estas en un rango de camara por cada tres pasos")
+            elif pasos > 38 and pasos < 63:
+                print("Ahora estas en un rango de camara por cada cinco pasos")
+            elif pasos > 63 and pasos < 84:
+                print("Ahora estas en un rango de camara por cada siete pasos")
+
+            if pasos_totales >= 80:
+                print("¡Felicidades! Has dado 100 pasos sin ser atrapado por una cámara de seguridad.")
+                print("Escribe 'avanzar' para continuar")
+                x = random.randint(0,9)
+                print("El número de esta sección es el:", x)
+                self.codigo_caja_fuerte += x
+                return
 
 
-    def minijue(self):
-        print("Entraste a un minijuego...")
-        print("En este minijuego tendrás que esquivar las balas, por ejemplo: si la bala viene a la derecha muevete a la izquierda")
+    def minijuego_mano_2(self):
+        print("Has entrado a un minijuego\n En esta ocasión entraras en combate con un grupo de policias")
+        print("Instrucciones: Oprime la letra que aparezca en pantalla para dispararle, si te equivocas él te disparará y te quitara vida")
+        print("Comencemos...")
+        time.sleep(7)
+        vida_oponente = 10
+        while vida_oponente > 0 and self.vidas > 0:
+            x = chr(random.randint(97, 122))
+            print(x)
+            a = input("Dispara ")
+            if a == x:
+                vida_oponente -= 1
+            else:
+                self.vidas -= 1
+        if self.vidas > 0:
+            print("Felicidades!!!")
+            print("Haz completado la prueba, escribe 'regresar' para continuar")
+            print("Vidas: ", self.vidas)
+            x = random.randint(0,9)
+            print("El número de esta sección es el:", x)
+            self.codigo_caja_fuerte += x
+        else:
+            print("Lo siento, tus vidas se han acabado")
+            self.game_over()
+
+
+    def minijuego_mano_3(self):
+        print("ALV!!!!(hasta la vista) atrás de ti sigue un policia vivo")
+        print("Tendrás esquivar las balas para continuar a la siguiente sección")
+        print("Instrucciones: Muevete al lado contrario de donde venga la bala, por ejemplo: si la bala viene a la derecha muevete a la izquierda")
         print("Teclas: \nW:Saltar\nA:Izquierda\nS:Agacharse:\nD:Derecha")
         print("Comencemos")
         i = 0
@@ -843,94 +1002,245 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         if self.vidas > 0:
             print("Felicidades!!!")
             print("Haz completado la prueba, escribe 'regresar' para continuar")
+            x = random.randint(0,9)
+            print("El número de esta sección es el:", x)
+            self.codigo_caja_fuerte += x
         else:
             print("Lo siento, tus vidas se han acabado")
-            #Que te mande al GAME OVER
+            self.game_over()
 
-    def minij(self):
-        print("TE HAN ATRAPADOOOO!")
+
+    def minijuego_mano_4(self):
+        duracion_ciclo = 40
+        codigos = []
+        diccionario = {'A': '1000', 'B': '1100', 'C': '1110', 'D': '1111', 'E': '0100', 'F': '0110', 'G': '0111', 'H': '0010', 'I': '0011', 'J': '0000', 'K': '1001', 'L': '1010', 'M': '0101', 'N': '0001', 'O': '1101', 'P': '1011'}
+        print("ADVERTENCIA !!! \nSe te olvidó que la sección de seguriadad tiene cámaras, te vieron y se activo una bomba, tienes que desactivar la bomba en menos de 40 segundos")
+        print("Instrucciones: Se te dara una secuencia de codigos, tu tendras que ver que letra le corresponde a cada código con el siguiente diccionario")
+
+        #Imprime el diccionario
+        for key, value in islice(diccionario.items(), 16):
+            print(f'{key}: {value}')
+
+        #Crea 10 codigos de 4 digitos cada uno
+        for i in range(10):
+            codigo = ""
+            for _ in range(4):
+                x = random.randint(0,1)
+                codigo += str(x) 
+            codigos.append(codigo)
+        #La computadora mapea la palabra según los códigos anteriores y el diccionario
+        aux = ""
+        for i in range (10):
+            for clave, valor in diccionario.items():
+                if codigos[i] == valor:
+                    aux += str(clave)
+        print(aux.lower())
+
+        class Temporizador(threading.Thread):
+            def __init__(self, duracion):
+                super().__init__()
+                self.duracion = duracion
+                self.terminado = threading.Event()
+
+            def run(self):
+                time.sleep(self.duracion)
+                self.terminado.set()
+
+        class Lector(threading.Thread):
+            def __init__(self):
+                super().__init__()
+                self.palabra = None
+                self.detener = threading.Event()
+
+            def run(self):
+                while not self.detener.is_set() and not temporizador.terminado.is_set():
+                    self.palabra = input("Escribe tu palabra: ")
+                    if self.palabra.lower() == aux.lower():
+                        self.detener.set()
+                        temporizador.terminado.set()
+                        print("FELICIDADES!!!!!\nEspera unos segundos...")
+
+        temporizador = Temporizador(duracion_ciclo)
+        lector = Lector()
+        inpu = 'a'
+        while inpu != 's':
+            inpu = input("Para comenzar presiona la letra s\n")
+            if inpu == 's':
+                print(codigos)
+                temporizador.start()
+                lector.start()
+                tiempo_inicio = time.time()
+
+        while not temporizador.terminado.is_set():
+            if lector.palabra is not None:
+                if lector.palabra.lower() != aux.lower():
+                    tiempo = int(duracion_ciclo - (time.time() - tiempo_inicio))
+                    print("Palabra incorrecta\t Te quedan:", tiempo, "segundos")
+                    lector.palabra = None
+
+        if temporizador.terminado.is_set() and not lector.detener.is_set():
+            print()
+            print("Se acabó el tiempo")
+            lector.detener.set()
+            self.game_over()
+        #OJO AQUI
+        x = random.randint(0,9)
+        print("El número de esta sección es el:", x)
+        self.codigo_caja_fuerte += x
+        print("Excelente, has pasado todas las pruebas ahora solo escribe 'decifrar' para llegar a la bóveda y decifrar el código") #OJO AQUI
+
+
+    def decifrar_caja_fuerte_mano(self):
+        def botton_1():
+            x = int(label1.cget("text")) + 1
+            if x == 10:
+                x = 0
+            x = str(x)
+            label1.config(text=x)
+        def botton_2():
+            x = int(label2.cget("text")) + 1
+            if x == 10:
+                x = 0
+            x = str(x)
+            label2.config(text=x)
+        def botton_3():
+            x = int(label3.cget("text")) + 1
+            if x == 10:
+                x = 0
+            x = str(x)
+            label3.config(text=x)
+        def botton_4():
+            x = int(label4.cget("text")) + 1
+            if x == 10:
+                x = 0
+            x = str(x)
+            label4.config(text=x)
+        def botton_5():
+            x = int(label1.cget("text"))
+            if x == 0:
+                x = 9
+            else:
+                x -= 1
+            x = str(x)
+            label1.config(text=x)
+        def botton_6():
+            x = int(label2.cget("text"))
+            if x == 0:
+                x = 9
+            else:
+                x -= 1
+            x = str(x)
+            label2.config(text=x)
+        def botton_7():
+            x = int(label3.cget("text"))
+            if x == 0:
+                x = 9
+            else:
+                x -= 1
+            x = str(x)
+            label3.config(text=x)
+        def botton_8():
+            x = int(label4.cget("text"))
+            if x == 0:
+                x = 9
+            else:
+                x -= 1
+            x = str(x)
+            label4.config(text=x)
+
+        def botton_9():
+            numero = ""
+            numero += label1.cget("text")
+            numero += label2.cget("text")
+            numero += label3.cget("text")
+            numero += label4.cget("text")
+            if numero == self.codigo_caja_fuerte:
+                print("Felicidaaaaadeeeeees!!!!!!, Lograste entrar a la caja fuerte")
+                print("Fin del juego")
+                time.sleep(3)
+                self.minijuego_mano_5
+            else:
+                if self.intentos_caja_fuerte > 0:
+                    print("Ese no es el número, te quedan", self.intentos_caja_fuerte, "más")
+                    self.decifrar_caja_fuerte()
+                else:
+                    print("Se acabaron tus intentos")
+                    self.game_over()
+
+        # Crear la ventana principal
+        ventana = tk.Tk()
+        ventana.title("")
+
+        contenedor0 = tk.Frame(ventana)
+        contenedor0.pack(expand=True)
+
+        # Crear un botón
+        button1 = tk.Button(contenedor0, text="^", command=botton_1)
+        button1.grid(row=0, column=0, padx=25, pady=20)
+
+        button2 = tk.Button(contenedor0, text="^", command=botton_2)
+        button2.grid(row=0, column=1, padx=25, pady=20)
+
+        button3 = tk.Button(contenedor0, text="^", command=botton_3)
+        button3.grid(row=0, column=2, padx=25, pady=20)
+
+        button4 = tk.Button(contenedor0, text="^", command=botton_4)
+        button4.grid(row=0, column=3, padx=25, pady=20)
+
+
+        contenedor1 = tk.Frame(ventana)
+        contenedor1.pack(expand=True)
+
+        # Crear un etiqueta
+        label1 = tk.Label(contenedor1, text="0")
+        label1.grid(row=0, column=0, padx=28, pady=20)
+
+        label2 = tk.Label(contenedor1, text="0")
+        label2.grid(row=0, column=1, padx=28, pady=20)
+
+        label3 = tk.Label(contenedor1, text="0")
+        label3.grid(row=0, column=2, padx=28, pady=20)
+
+        label4 = tk.Label(contenedor1, text="0")
+        label4.grid(row=0, column=3, padx=28, pady=20)
+
+        contenedor2 = tk.Frame(ventana)
+        contenedor2.pack(expand=True)
+
+        # Crear un botón
+        button5 = tk.Button(contenedor2, text="v", command=botton_5)
+        button5.grid(row=0, column=0, padx=25, pady=20)
+
+        button6 = tk.Button(contenedor2, text="v", command=botton_6)
+        button6.grid(row=0, column=1, padx=25, pady=20)
+
+        button7 = tk.Button(contenedor2, text="v", command=botton_7)
+        button7.grid(row=0, column=2, padx=25, pady=20)
+
+        button8 = tk.Button(contenedor2, text="v", command=botton_8)
+        button8.grid(row=0, column=3, padx=25, pady=20)
+
+        contenedor3 = tk.Frame(ventana)
+        contenedor3.pack(expand=True)
+
+        botton9 = tk.Button(contenedor3, text="Aceptar", command=botton_9)
+        botton9.grid(row=0, column=3, padx=25, pady=20)
+
+        # Iniciar el bucle principal de la interfaz gráfica
+        ventana.mainloop()
+
+
+    def minijuego_mano_5(self):
+        print("AUN NO GANAS, TE HAN ATRAPADOOOO!")
         print("Para escapar escribe un número del 1 al 7, generaremos un número al azar, si coincide con el tuyo PIERDES si no coincide GANARAS")
         a = input("Escribe tu numero: ")
         x = random.randint(1, 7)
     
         if x == a:
             print("Lo siento, perdiste")
+            self.game_over()
         else:
-            print("Ufff, por poco pierdes, escribe 'regresar' para continuar")
-            
-            
-    def mini(self):
-        print("Has entrado a un minijuego\n En esta ocasión entraras en combate con un policia")
-        print("Instrucciones: Oprime la letra que aparezca en pantalla para dispararle, si te equivocas él te disparará y te quitara vida")
-        print("Comencemos...")
-        time.sleep(7)
-        vida_oponente = 10
-        while vida_oponente > 0 and self.vidas > 0:
-            x = chr(random.randint(97, 122))
-            print(x)
-            a = input("Dispara ")
-            if a == x:
-                vida_oponente -= 1
-            else:
-                self.vidas -= 1
-        if self.vidas > 0:
-            print("Felicidades!!!")
-            print("Haz completado la prueba, escribe 'regresar' para continuar")
-            print("Vidas: ", self.vidas)
-        else:
-            print("Lo siento, tus vidas se han acabado")
-            #Que te mande al GAME OVER   
-            
-            
-    def mover_jugador(self, posicion_jugador, pasos):
-        return posicion_jugador + pasos
-
-    def detectar_camara(self, posiciones_camaras, posicion_jugador):
-        for posicion_camara in posiciones_camaras:
-            if posicion_camara in range(posicion_jugador, posicion_jugador + 1 ):
-                return True
-        return False
-
-    def mini_juego_mano0(self):
-        posicion_jugador = 0
-        rango_vision = 10
-        pasos_totales = 0
-        contador_multiplo = 5
-        
-        os.system('cls' if os.name == 'nt' else 'clear')
-        
-        print("\n\nHas logrado pasar por cajas, pero se acerca el pasillo donde hay mayor vigilancia, vas a tener que escabar de las camaras de suguridad")
-        print("\tPara ello hemos tomado un registro de la ubicacion de las camaras de suguridad, y hemos notado que tienen un patron ")
-        print("\tla primer camara se encuentra a un rango de 2 pasos, te iremos dando la informacion conforme vayas avanzando")
-        print("\t¡Cuidado! si te detectan te atraparan y perderas una vida en el juego\n\n")
-        
-        while True:
-            posiciones_camaras = list(range(0, 20, 2)) + list(range(20, 38, 3)) + list(range(38, 63, 5)) + list(range(63, 85, 7))
-            
-            pasos = int(input("¿Cuántos pasos quieres moverte? "))
-            posicion_jugador = self.mover_jugador(posicion_jugador, pasos)
-            pasos_totales += pasos
-            
-            if self.detectar_camara(posiciones_camaras, posicion_jugador):
-                print("¡Has sido atrapado por una cámara de seguridad!")
-                self.vidas -= 1
-                self.game_over()
-                return    
-                
-            if pasos < 20:
-                print("Sigues en un rango de camara por cada dos pasos")
-            elif pasos > 20 and pasos < 38:
-                print("Ahora estas en un rango de camara por cada tres pasos")
-            elif pasos > 38 and pasos < 63:
-                print("Ahora estas en un rango de camara por cada cinco pasos")
-            elif pasos > 63 and pasos < 84:
-                print("Ahora estas en un rango de camara por cada siete pasos")
-
-            if pasos_totales >= 80:
-                print("¡Felicidades! Has dado 100 pasos sin ser atrapado por una cámara de seguridad.")
-                return
-            
-        
+            print("Ufff, por poco pierdes, ahora si GANASTE")
         
 nom = input("Ingresa tu nombre: ")
 print("Cargando...")
