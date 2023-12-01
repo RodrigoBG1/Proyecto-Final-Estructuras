@@ -5,6 +5,37 @@ from PIL import Image
 import librosa
 import numpy as np
 import os
+import tkinter as tk
+from tkinter import filedialog
+
+class CompressorGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Compressor GUI")
+
+        # Botones
+        self.compress_button = tk.Button(self.root, text="Comprimir", command=self.compress_file)
+        self.compress_button.pack(pady=10)
+
+        self.decompress_button = tk.Button(self.root, text="Descomprimir", command=self.decompress_file)
+        self.decompress_button.pack(pady=10)
+
+    def compress_file(self):
+        file_path = filedialog.askopenfilename(title="Seleccionar archivo para comprimir", filetypes=[("Todos los archivos", "*.*")])
+        if file_path:
+            # Lógica para comprimir el archivo aquí
+            print(f"Comprimiendo archivo: {file_path}")
+
+    def decompress_file(self):
+        file_path = filedialog.askopenfilename(title="Seleccionar archivo para descomprimir", filetypes=[("Todos los archivos", "*.*")])
+        if file_path:
+            # Lógica para descomprimir el archivo aquí
+            print(f"Descomprimiendo archivo: {file_path}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CompressorGUI(root)
+    root.mainloop()
 
 class Node:
     def __init__(self, simbolo = None, frecuencia = 0, hijo_izq = None, hijo_der = None):
