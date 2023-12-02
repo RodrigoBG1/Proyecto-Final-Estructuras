@@ -537,57 +537,59 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 print("-->La camara", a, "apunta a la izquierda con un rango de: ", ini, "-", fin)
                 print("-->La camara", b, "apunta a la derecha con un rango de:", ini4, "-", fin4)
                 respuesta = input("Si vas a avanzar escribe el número de pasos, de lo contrario escribe 'esperar': ")
-                while respuesta.lower() == 'esperar' or (respuesta.isdigit() and int(respuesta) >= 0):
-                    if respuesta != 'esperar': 
-                        if int(respuesta) > fin3 and int(respuesta) < ini4:
-                            print("\nListo, avanzaste", respuesta, "pasos")
-                            print("{ Te encuentras abajo de la cámara", b, "}")
-                        else:
-                            self.intentos -= 1
-                            if self.intentos == 0:
-                                print("Ya fueron 3 intentos, debes continuar, pero perderás una vida,\nTus vidas:", self.vidas-1)
-                                self.vidas -= 1
-                                if self.vidas == 0:
-                                    game.game_over()
-                                self.intentos = 3
-                            else: 
-                                print("¡¡¡La cámara te vio, te quedan", self.intentos, "oportunidades para no perder vidas!!!")
-                            print("Vuelve a intentarlo, sigues abajo de la cámara", a)
-                            self.case1(a, b, ini, fin, ini4, fin4)
-                    elif respuesta == 'esperar':
-                        print("Bien, ahora espera a que giren las cámaras para poder avanzar")
-                        time.sleep(3)
-                        print()
-                        print("Listo, las camaras han cambiado")
+                while respuesta != "esperar" and not respuesta.isdigit():
+                    print("Respuesta no válida, intenta de nuevo")
                     respuesta = input("Si vas a avanzar escribe el número de pasos, de lo contrario escribe 'esperar': ")
+                if respuesta != 'esperar': 
+                    if int(respuesta) > fin3 and int(respuesta) < ini4:
+                        print("\nListo, avanzaste", respuesta, "pasos")
+                        print("{ Te encuentras abajo de la cámara", b, "}")
+                    else:
+                        self.intentos -= 1
+                        if self.intentos == 0:
+                            print("Ya fueron 3 intentos, debes continuar, pero perderás una vida,\nTus vidas:", self.vidas-1)
+                            self.vidas -= 1
+                            if self.vidas == 0:
+                                game.game_over()
+                            self.intentos = 3
+                        else: 
+                            print("¡¡¡La cámara te vio, te quedan", self.intentos, "oportunidades para no perder vidas!!!")
+                        print("Vuelve a intentarlo, sigues abajo de la cámara", a)
+                        self.case1(a, b, ini, fin, ini4, fin4)
+                elif respuesta == 'esperar':
+                    print("Bien, ahora espera a que giren las cámaras para poder avanzar")
+                    time.sleep(3)
+                    print()
+                    print("Listo, las camaras han cambiado")
 
             def case2(self, a, b, ini2, fin2, ini3, fin3):
                 print("-->La camara", a, "apunta a la derecha con un rango de:", ini2, "-", fin2)
                 print("-->La camara", b, "apunta a la izquierda con un rango de:", ini3, "-", fin3)
                 respuesta = input("Si vas a avanzar escribe el número de pasos, de lo contrario escribe 'esperar': ")
-                while respuesta.lower() == 'esperar' or (respuesta.isdigit() and int(respuesta) >= 0):
-                    if respuesta != 'esperar':
-                        if int(respuesta) > fin and int(respuesta) < ini2:
-                            print("\nListo, avanzaste", respuesta, "pasos")
-                            print("{ Te encuentras abajo de la camara", a, "}")
-                        else:
-                            self.intentos -= 1
-                            if self.intentos == 0:
-                                print("Ya fueron 3 intentos, debes continuar, pero perderás una vida,\nTus vidas:", self.vidas-1)
-                                self.vidas -= 1
-                                if self.vidas == 0:
-                                    game.game_over()
-                                self.intentos = 3
-                            else:
-                                print("¡¡¡La cámara te vio, te quedan,", self.intentos, "oportunidades para no perder vidas!!!")
-                            print("Vuelve a intentarlo, sigues abajo de la cámara", b)
-                            self.case2(a, b, ini2, fin2, ini3, fin3)
-                    elif respuesta == 'esperar':
-                        print("Bien, ahora espera a que giren las cámaras para poder avanzar")
-                        time.sleep(3)
-                        print()
-                        print("Listo, las camaras han cambiado")
+                while respuesta != "esperar" and not respuesta.isdigit():
+                    print("Respuesta no válida, intenta de nuevo")
                     respuesta = input("Si vas a avanzar escribe el número de pasos, de lo contrario escribe 'esperar': ")
+                if respuesta != 'esperar':
+                    if int(respuesta) > fin and int(respuesta) < ini2:
+                        print("\nListo, avanzaste", respuesta, "pasos")
+                        print("{ Te encuentras abajo de la camara", a, "}")
+                    else:
+                        self.intentos -= 1
+                        if self.intentos == 0:
+                            print("Ya fueron 3 intentos, debes continuar, pero perderás una vida,\nTus vidas:", self.vidas-1)
+                            self.vidas -= 1
+                            if self.vidas == 0:
+                                game.game_over()
+                            self.intentos = 3
+                        else:
+                            print("¡¡¡La cámara te vio, te quedan,", self.intentos, "oportunidades para no perder vidas!!!")
+                        print("Vuelve a intentarlo, sigues abajo de la cámara", b)
+                        self.case2(a, b, ini2, fin2, ini3, fin3)
+                elif respuesta == 'esperar':
+                    print("Bien, ahora espera a que giren las cámaras para poder avanzar")
+                    time.sleep(3)
+                    print()
+                    print("Listo, las camaras han cambiado")
             
             def case4(self, b):
                 print("La camara", b, "apunta a la izquierda")
