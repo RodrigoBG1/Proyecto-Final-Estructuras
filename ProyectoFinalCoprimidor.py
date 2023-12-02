@@ -316,17 +316,9 @@ class Interface:
                 diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
                 self.Obj2.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
             elif self.extension == ".mp3" or self.extension == ".wav":
-                frecuencia_bytes = self.Obj3.frecuencia_simbolos(self.file_path_compress)
-                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes)
-                audio = self.Obj3.obtener_audio(self.file_path_compress)
-                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-                self.Obj3.comprimir(diccionario_codigos_nuevos, audio, self.file_archivo, arbol_de_huffman , self.file_arbol)
+                pass
             elif self.extension == ".mov":
-                frecuencia_bytes = self.Obj4.frecuencia_simbolos(self.file_path_compress)
-                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes)
-                video = self.Obj4.obtener_video(self.file_path_compress)
-                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-                self.Obj4.comprimir(diccionario_codigos_nuevos, video, self.file_archivo, arbol_de_huffman , self.file_arbol)
+                pass
             else:
                 print("No se reconocio la extensión")
 
@@ -341,9 +333,9 @@ class Interface:
             elif self.extension == ".bmp" or self.extension == ".png" or self.extension == ".jpg":
                 self.Obj2.descomprimir(self.file_archivo, self.file_arbol)
             elif self.extension == ".mp3" or self.extension == ".wav":
-                self.Obj3.descomprimir(self.file_archivo, self.file_arbol)
+                pass
             elif self.extension == ".mov":
-                self.Obj4.descomprimir(self.file_archivo, self.file_arbol)
+                pass
             else:
                 print("No se reconocio la extensión")
 
