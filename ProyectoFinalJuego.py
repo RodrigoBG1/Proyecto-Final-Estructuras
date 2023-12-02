@@ -49,7 +49,7 @@ MMMSMMMMSSSSP   `MMMM     ;.;   :MMMMMMMMM;
 """
 print(Titulo, Personaje)
 pygame.mixer.init()
-pygame.mixer.music.load("OneDrive\Documentos\GitHub\Proyecto-Final-Estructuras\intro.mp3")
+pygame.mixer.music.load("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Proyecto_Juego\intro.mp3")
 pygame.mixer.music.play()
 
 class Juego:
@@ -153,14 +153,14 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         """
         print(win)
         pygame.mixer.init()
-        pygame.mixer.music.load("OneDrive\Documentos\GitHub\Proyecto-Final-Estructuras\win.mp3")
+        pygame.mixer.music.load("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Proyecto_Juego\win.mp3")
         pygame.mixer.music.play()
         exit()
         
     def __init__(self, nom):
         self.nom = nom
         self.vidas = 3
-        self.codigo_caja_fuerte = ""
+        self.codigo_caja_fuerte = "0000"
         self.intentos_caja_fuerte = 2
         self.nombre_policia = ""
         self.edad_policia = ""
@@ -261,7 +261,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 },
 
                     "Oficinas":{
-                        "mensaje": "Pasaste el pasillo exitosamente, ahora has llegado a las oficinas y hay un grupo de policias, en esta ocasión tendrás que dispararles, escribe 'disparar' para empezar el juego",
+                        "mensaje": "Pasaste el pasillo exitosamente, ahora has llegado a las oficinas y hay un grupo de policias,\n\t\t\t\t\t\t\t en esta ocasión tendrás que dispararles, escribe 'disparar' para empezar el juego",
                         "opciones": {
                             "disparar": self.minijuego_mano_2,
                             "regresar": "Ejecutivo"
@@ -293,7 +293,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             },
 
         "Sigiloso": {
-            "mensaje": "Has decidido el modo sigiloso, para esta opción tendrás que infiltrarte en el banco, te infiltraras vistiendote de policia para crear tu identificación falsa escribe 'policia'",
+            "mensaje": "Has decidido el modo sigiloso, para esta opción tendrás que infiltrarte en el banco, te infiltraras vistiendote de policia\n\t\t\t\t\t\t\t para crear tu identificación falsa escribe 'policia'",
             "opciones": {
                 "policia":  self.identificacion_falsa,
                 "listo": "Policia"
@@ -301,7 +301,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         },
 
                 "Policia": {
-                "mensaje": "Después de ver los datos del policia, entras y nadie nota nada, caminas y llegas a las cajas, ahora tienes que corroborar que las cajas con su cantidad respectiva de dinero escribe 'checar' para continuar ",
+                "mensaje": "Después de ver los datos del policia, entras y nadie nota nada, caminas y llegas a las cajas,\n\t\t\t\t\t\t\t ahora tienes que corroborar que las cajas con su cantidad respectiva de dinero escribe 'checar' para continuar ",
                 "opciones": {
                     "checar":  self.checar,
                     "continuar": "Checar"
@@ -312,7 +312,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                     "mensaje": "Perfecto, ahora caminas por un pasillo lleno de cámaras, pero como eres policias no pasa nada, escribe 'caminar' para avanzar",
                     "opciones": {
                         "caminar":  self.caminar,
-                        "seguir": "Ofice"
+                        "entrar": "Ofice"
                     }
                 },
 
@@ -325,7 +325,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                         },
 
                             "Ejec": {
-                            "mensaje": "Te encontraste con el ejecutivo, el reconoce siempre a todos, pero como tu eres infiltrado, te llama, te quita tu identificación y te pregunta tus datos. Escribe 'datos' para responderle",
+                            "mensaje": "Te encontraste con el ejecutivo, el reconoce siempre a todos, pero como tu eres infiltrado, te llama,\n\t\t\t\t\t\t\t te quita tu identificación y te pregunta tus datos. Escribe 'datos' para responderle",
                             "opciones": {
                                 "datos":  self.datos,
                                 "seguir": "Seguri"
@@ -341,9 +341,9 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                             },
 
         "hack": {
-            "mensaje": "Has decidido la opcion de hackear la base de datos del banco, para esto hiremos buscando partes de la \n\t\t\t\t\t\t\tcontraseña para poder acceder a la base de datos, escribe reglas para continuar",
+            "mensaje": "Has decidido la opcion de hackear la base de datos del banco, para esto iremos buscando partes de la \n\t\t\t\t\t\t\tcontraseña para poder acceder a la base de datos, escribe seguir para continuar",
             "opciones": {
-                "reglas":  "reglas",
+                "seguir":  "reglas",
                 "hack": "hack"
                 }
             },
@@ -376,14 +376,15 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                             "mensaje": "Muy bien tu si sabes lo que es bueno, por eso te damos dos opciones: x para jugar el siguiente juego, y para salterte el juego",
                             "opciones": {
                                 "x":  self.minh3,
-                                "y": "pass"
+                                "y": "pass",
+                                "m": self.minh4
                                 }
                             },
                         "deberias": {
                             "mensaje": "Pues deberias, no sabes lo que te pierdes, pero bueno es momento de seguir, presiona x ",
                             "opciones": {
-                                "si":  "con razon",
-                                "no": "deberias"
+                                "x":  self.minh3,
+                                "m": "juego 4"
                                 }
                             },
                              "pass": {
@@ -403,7 +404,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                     }
                                 },
                                 "que": {
-                                    "mensaje": "Venga, esta ya es la ultima vez que preguntamos estas cerca de ganar, vuelve a conterar la pregunta",
+                                    "mensaje": "Venga, esta ya es la ultima vez que preguntamos estas cerca de ganar, vuelve a contestar la pregunta",
                                     "opciones": {
                                         "si": self.win,
                                         "no": "como"
@@ -1130,8 +1131,10 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             a = input("Dispara ")
             if a == x:
                 vida_oponente -= 1
+                print("Le disparaste al oponentente, vidas:", "/"*vida_oponente)
             else:
                 self.vidas -= 1
+                print("Te dispararon, te quedan", self.vidas, "vidas")
         if self.vidas > 0:
             print("Felicidades!!!")
             print("Haz completado la prueba, escribe 'regresar' para continuar")
@@ -1204,10 +1207,10 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
 
     def minijuego_mano_4(self):
-        duracion_ciclo = 40
+        duracion_ciclo = 60
         codigos = []
         diccionario = {'A': '1000', 'B': '1100', 'C': '1110', 'D': '1111', 'E': '0100', 'F': '0110', 'G': '0111', 'H': '0010', 'I': '0011', 'J': '0000', 'K': '1001', 'L': '1010', 'M': '0101', 'N': '0001', 'O': '1101', 'P': '1011'}
-        print("ADVERTENCIA !!! \nSe te olvidó que la sección de seguriadad tiene cámaras, te vieron y se activo una bomba, tienes que desactivar la bomba en menos de 40 segundos")
+        print("ADVERTENCIA !!! \nSe te olvidó que la sección de seguriadad tiene cámaras, te vieron y se activo una bomba, tienes que desactivar la bomba en menos de 60 segundos")
         print("Instrucciones: Se te dara una secuencia de codigos, tu tendras que ver que letra le corresponde a cada código con el siguiente diccionario")
 
         #Imprime el diccionario
@@ -1350,12 +1353,14 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             if numero == self.codigo_caja_fuerte:
                 print("Felicidaaaaadeeeeees!!!!!!, Lograste entrar a la caja fuerte")
                 print("Fin del juego")
+                ventana.destroy()
                 time.sleep(3)
                 self.minijuego_mano_5()
             else:
                 if self.intentos_caja_fuerte > 0:
+                    ventana.destroy()
                     print("Ese no es el número, te quedan", self.intentos_caja_fuerte, "más")
-                    self.decifrar_caja_fuerte()
+                    self.decifrar_caja_fuerte_mano()
                 else:
                     print("Se acabaron tus intentos")
                     self.game_over()
@@ -1437,8 +1442,12 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         
 
     def identificacion_falsa(self):
-        print("Escribe tu nombre falso, la edad, altura y peso se te asignaran pero ten en cuenta cuales fueron esos datos asignados, puede que después los ocupes")
+        print("Escribe tu nombre falso:")
         self.nombre_policia = input("Nombre: ")
+        print("La edad, altura y peso se te asignaran pero ten en cuenta cuales fueron esos datos asignados, puede que después los ocupes")
+        print("Espera unos segundos en lo que creamos tu ID falsa")
+        time.sleep(4)
+        print("Listo")
         x = random.randint(28, 50)
         self.edad_policia = str(x)
         x = random.randint(20, 99)
@@ -1492,7 +1501,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 num += str(x)
             lista[i] = num
             a = random.randint(1,2)
-            if (i+1) % 2 != 0 and a == 2:
+            if (i+1) % 2 != 0 and a == 2: #CREO QUE PUDIERAMOS QUITAR LA PRIMERA CONDICION
                 tulista[i] = num
             else:
                 tulista[i] = str(int(num)-999)
@@ -1504,7 +1513,9 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             if lista[i] == tulista[i]:
                 print("Número", i+1, ":")
                 resp = input()
-                if resp == "correcto":
+                while resp.lower != 'correcto' and resp.lower() != "reportar":
+                    resp = input("Palabra no válida, vuelve a ingresar tu respuesta: ")
+                if resp.lower() == "correcto":
                     i += 1
                 else:
                     self.vidas -= 1
@@ -1512,7 +1523,9 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             else:
                 print("Número", i+1, ":")
                 resp = input()
-                if resp == "reportar":
+                while resp.lower != 'correcto' and resp.lower() != "reportar":
+                    resp = input("Palabra no válida, vuelve a ingresar tu respuesta: ")
+                if resp.lower() == "reportar":
                     i += 1
                 else:
                     self.vidas -= 1
@@ -1529,13 +1542,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
     def caminar(self):
         print("Caminando...")
         time.sleep(4)
-        print("Listo, para entrar a las oficinas escribe 'seguir'")
+        print("Listo, para entrar a las oficinas escribe 'entrar'")
     
     def hablar(self):
         print("\t\t\t\t\t\tPolicia: Hola, como estás?")
         resp = input()
 
-        if "tu" in resp.lower():
+        if "tu" in resp.lower() or "usted" in resp.lower():
             print("\t\t\t\t\t\tMmm como siempre, todo bien")
         elif "bien" in resp.lower() or "excelente" in resp.lower() or "perfecto" in resp.lower() or "mas o menos" in resp.lower() or "feliz" in resp.lower() or "siempre" in resp.lower() or "genial" in resp.lower() or "normal" in resp.lower():
             print("\t\t\t\t\t\tMe da gusto")
@@ -1567,7 +1580,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print("\t\t\t\t\t\tA que bueno, quieres ir a un partido de futbol, con unos amigos?")
             resp = input()
             if "se" in resp.lower():
-                print("\t\t\t\t\t\tBueno si te desocupas me dices para que llegues")
+                print("\t\t\t\t\t\tEsta bien, si cambias de opinión me dices para que llegues")
                 resp = input()
             elif "no" in resp.lower():
                 print("\t\t\t\t\t\tEsta bien, a ver si a la otra si quieres")
@@ -1583,26 +1596,26 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
     def datos(self):
         print("Tu cara se me hace desconocida, eres nuevo ?, bueno no importa, te haré unas preguntas y veré si coinciden con tu identificación")
-        resp = input("Cual es tu nombre?")
+        resp = input("Cual es tu nombre? ")
         if resp.lower() == self.nombre_policia:
             print("Correcto")
         else:
             print("Eres un infiltrado")
             self.game_over()
-        resp = input("Cual es tu peso?")
-        if resp == self.altura_policia:
+        resp = input("Cual es tu peso? ")
+        if int(resp) == self.altura_policia:
             print("Mmm bien")
         else:
             print("Eres un infiltrado")
             self.game_over()
-        resp = input("Cuántos años tienes?")
-        if resp == self.edad_policia:
+        resp = input("Cuántos años tienes? ")
+        if int(resp) == self.edad_policia:
             print("Ok, una pregunta más")
         else:
             print("Eres un infiltrado")
             self.game_over()
-        resp = input("Cuánto mides?")
-        if resp == self.altura_policia:
+        resp = input("Cuánto mides? ")
+        if int(resp) == self.altura_policia:
             print("Esta bien, si eres un policia")
         else:
             print("Eres un infiltrado")
@@ -1667,6 +1680,8 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         print("El número de esta sección es el:", x)
         self.codigo_caja_fuerte += str(x)
         print("Escribe 'decifrar' para poner el código en la caja fuerte")
+
+    
         
     def minh1(self):
         diccionario = """ 
@@ -1699,7 +1714,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         palabras = ['python', 'juego', 'adivinanza', 'palabra', 'decifrar']
         palabra = random.choice(palabras)
         adivinanza = ['_'] * len(palabra)
-        intentos = 10
+        intentos = 13
         vidas = 3
 
         print("¡Bienvenido al juego de adivinanzas!")
@@ -1775,7 +1790,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
     def generar_codigo(self):
         digitos = [str(num) for num in range(1, 7)]
         random.shuffle(digitos)
-        print(digitos[:4])
+        """print(digitos[:4])"""
         return ''.join(digitos[:4])
 
     def obtener_entrada(self):
@@ -1818,9 +1833,8 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
  
 nom = input("Ingresa tu nombre: ")
-#print("Cargando...")
-#time.sleep(2) 
+print("Cargando...")
+time.sleep(2) 
 os.system('cls' if os.name == 'nt' else 'clear')
 juego = Juego(nom)
-juego.win()
-#juego.jugar()
+juego.jugar()
