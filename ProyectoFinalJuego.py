@@ -119,7 +119,12 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         self.nom = nom
         self.vidas = 3
         self.codigo_caja_fuerte = ""
-        self.intentos_caja_fuerte = 3
+        self.intentos_caja_fuerte = 2
+        self.nombre_policia = ""
+        self.edad_policia = ""
+        self.altura_policia = ""
+        self.peso_policia = ""
+
         self.decisiones = {
 "inicio": {
     "mensaje": "Buenas tardes {} hemos estado viendo el banco central de Mexico y el de Buenos Aires, \n\t\t\t\t\t\tcreemos que tu eres la mejor opcion para esete atraco. De que mision quieres formar parte?(Mexico, Buenos Aires)".format(self.nom),
@@ -170,10 +175,10 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                         },
 
                             "Cajas": {
-                                "mensaje": "Listo, has llegado a las cajas para continuar las tendrás que asaltar y conseguir dinero",
+                                "mensaje": "Listo, has llegado a las cajas para continuar las tendrás que asaltar y conseguir dinero, escribe 'asaltar' para continuar",
                                 "opciones":
                                 {
-                                    "asaltar": self.minijuego_2,
+                                    "asaltar": self.minijuego_2,#OJO
                                     "seguir": "Donde"
                                 }
                             },
@@ -238,19 +243,61 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                             },
 
 "Buenos Aires": {
-    "mensaje": "Che {} bienvenido a la mision de atraco de Buenos Aires, para este atracto tenemos tres opciones: \n\t\t\t\t\t\t\t - Captura de rehenes \n\t\t\t\t\t\t\t - Hackea la base de datos".format(self.nom),
+    "mensaje": "Che {} bienvenido a la mision de atraco de Buenos Aires, para este atracto tenemos dos opciones: \n\t\t\t\t\t\t\t - Modo sigiloso \n\t\t\t\t\t\t\t - Hackea la base de datos".format(self.nom),
     "opciones": {
-        "rehen":  "rehen",
+        "sigiloso":  "Sigiloso",
         "hack": "hack"
     }
             },
-        "rehen": {
-            "mensaje": "Has decidido tomar rehenes, por lo que tendremos que actuar de manera rapida en un inicio, y despus resistir, para empezar ",
+
+        "Sigiloso": {
+            "mensaje": "Has decidido el modo sigiloso, para esta opción tendrás que infiltrarte en el banco, te infiltraras vistiendote de policia para crear tu identificación falsa escribe 'policia'",
             "opciones": {
-                "rehen":  "rehen",
-                "hack": "hack"
-    }
+                "policia":  self.identificacion_falsa,
+                "listo": "Policia"
+            }
+        },
+
+                "Policia": {
+                "mensaje": "Después de ver los datos del policia, entras y nadie nota nada, caminas y llegas a las cajas, ahora tienes que corroborar que las cajas con su cantidad respectiva de dinero escribe 'checar' para continuar ",
+                "opciones": {
+                    "checar":  self.checar,
+                    "continuar": "Checar"
+                }
             },
+
+                    "Checar": {
+                    "mensaje": "Perfecto, ahora caminas por un pasillo lleno de cámaras, pero como eres policias no pasa nada, escribe 'caminar' para avanzar",
+                    "opciones": {
+                        "caminar":  self.caminar,
+                        "seguir": "Ofice"
+                    }
+                },
+
+                        "Ofice": {
+                            "mensaje": "Te encuentras en las oficinas y hay muchos policias, tienes que hablar con ellos para disimular tu falsa identidad, escribe 'hablar' para continuar",
+                            "opciones": {
+                                "hablar":  self.hablar,
+                                "seguir": "Ejec"
+                            }
+                        },
+
+                            "Ejec": {
+                            "mensaje": "Te encontraste con el ejecutivo, el reconoce siempre a todos, pero como tu eres infiltrado, te llama, te quita tu identificación y te pregunta tus datos. Escribe 'datos' para responderle",
+                            "opciones": {
+                                "datos":  self.datos,
+                                "seguir": "Seguri"
+                            }
+                        },
+
+                                "Seguri": {
+                                "mensaje": "Entraste a Seguridad, la última parte del banco, escribe 'vamos' para avanzar",
+                                "opciones": {
+                                    "vamos":  self.cables,
+                                    "decifrar": self.decifrar_caja_fuerte #AQUI
+                                }
+                            },
+
         "hack": {
             "mensaje": "Has decidido la opcion de hackear la base de datos del banco, asi podremos recuperar datos y usarlso a tu favor ",
             "opciones": {
@@ -432,7 +479,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                                 print("Has salido de las oficinas Felicidades, escribe seguir par continuar")
                                                 x = random.randint(0,9)
                                                 print("El número de esta sección es el:", x)
-                                                self.codigo_caja_fuerte += x
+                                                self.codigo_caja_fuerte += str(x)
                                             else:
                                                 self.vidas -= 1
                                                 print("Intentalo una vez mas")
@@ -540,7 +587,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             
             def case4(self, b):
                 print("La camara", b, "apunta a la izquierda")
-                a = input("Escribe 'seguir' para continuar")
+                a = input("Escribe 'avanzar' para pasar la última cámara")
 
         ob = ej()
         ini, fin, ini2, fin2, ini3, fin3, ini4, fin4 = ob.caso_base()
@@ -562,12 +609,14 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         print("Felicidadeeees")
         x = random.randint(0,9)
         print("El número de esta sección es el:", x)
-        self.codigo_caja_fuerte += x
+        self.codigo_caja_fuerte += str(x)
+        print("Escribe 'seguir' para continuar")
 
     def minijuego_1(self):
         print("Instrucciones: Para saber que código es el correcto tendrás que adivinar en cual de las 6 cajas se encuentra el número")
-        print("Pista: son 5 digitos y si su posicion es imparpar se encuentra en una caja de posicion impar, lo mismo para posiciones pares")
+        print("Pista: son 5 digitos y si su posicion es impar se encuentra en una caja de posicion impar, lo mismo para posiciones pares")
         print("Ejemplos: el tercer digito podría encontrarse en la caja 1, 3 o 5")
+        print("Tienes 4 intentos por digito")
 
         cajas = """
                 ████████      ████████      ████████    
@@ -579,7 +628,9 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 ████████      ████████      ████████
                 """
         lista = ""
-        for i in range(1, 6):
+        i = 1
+        intentos = 4
+        while i < 6:
             print(cajas)
             x = random.randint(0, 9)
             lista += str(x)
@@ -590,8 +641,16 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 while a != y:
                     a = input("En que caja crees que esté el dígito? ")
                     if int(a) == y:
+                        i += 1
+                        intentos = 4
                         print("El digito", i, "es:", x)
                         break
+                    else:
+                        intentos -= 1
+                        print("Incorrecto, te quedan", intentos, "intentos")
+                    if intentos == 0:
+                        print("SE ACTIVÓ LA ALARMA Y ALERTASTE A LOS POLICIAS...")
+                        self.game_over()
             else:
                 y = random.randrange(2, 7, 2)
                 #print(y)
@@ -599,10 +658,19 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 while a != y:
                     a = input("En que caja crees que esté el dígito?")
                     if int(a) == y:
+                        i += 1
+                        intentos = 4
                         print("El digito", i, "es:", x)
                         break
+                    else:
+                        intentos -= 1
+                        print("Incorrecto, te quedan", intentos, "intentos")
+                    if intentos == 0:
+                        print("SE ACTIVÓ LA ALARMA Y ALERTASTE A LOS POLICIAS...")
+                        self.game_over()
             input("Presiona enter después de que anotes o te memorices el dígito")
             os.system('cls' if os.name == 'nt' else 'clear')
+        
         p = input("Escribe el número que econtraste en las cajas: ")
         if p == lista:
             print("Felicidadeeeees")
@@ -614,7 +682,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         print("Escribe 'seguir' para continuar con la misión")
         x = random.randint(0,9)
         print("El número de esta sección es el:", x)
-        self.codigo_caja_fuerte += x
+        self.codigo_caja_fuerte += str(x)
 
     def minijuego_2(self):
         duracion_ciclo = 20
@@ -677,10 +745,10 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print("Se acabó el tiempo")
         dinero_robado = lector.contador * 19999
         print("Lograste robar $", dinero_robado)
-        print("Escribe 'seguir' para continuar el asalto")
         x = random.randint(0,9)
         print("El número de esta sección es el:", x)
-        self.codigo_caja_fuerte += x
+        self.codigo_caja_fuerte += str(x)
+        print("Escribe 'seguir' para continuar el asalto")
 
     def decifrar_caja_fuerte(self):
         def botton_1():
@@ -749,9 +817,12 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             if numero == self.codigo_caja_fuerte:
                 print("Felicidaaaaadeeeeees!!!!!!, Lograste entrar a la caja fuerte")
                 print("Fin del juego")
+                ventana.destroy()
                 exit()
             else:
+                ventana.destroy()
                 if self.intentos_caja_fuerte > 0:
+                    self.intentos_caja_fuerte -= 1
                     print("Ese no es el número, te quedan", self.intentos_caja_fuerte, "más")
                     self.decifrar_caja_fuerte()
                 else:
@@ -867,9 +938,6 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             game = ClickGame(ventana)
             ventana.mainloop()
         print("Escribe 'seguir' para continuar")
-        x = random.randint(0,9)
-        print("El número de esta sección es el:", x)
-        self.codigo_caja_fuerte += x
 
 
     def mover_jugador(self, posicion_jugador, pasos):
@@ -921,7 +989,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 print("Escribe 'avanzar' para continuar")
                 x = random.randint(0,9)
                 print("El número de esta sección es el:", x)
-                self.codigo_caja_fuerte += x
+                self.codigo_caja_fuerte += str(x)
                 return
 
 
@@ -945,7 +1013,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print("Vidas: ", self.vidas)
             x = random.randint(0,9)
             print("El número de esta sección es el:", x)
-            self.codigo_caja_fuerte += x
+            self.codigo_caja_fuerte += str(x)
         else:
             print("Lo siento, tus vidas se han acabado")
             self.game_over()
@@ -1004,7 +1072,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print("Haz completado la prueba, escribe 'regresar' para continuar")
             x = random.randint(0,9)
             print("El número de esta sección es el:", x)
-            self.codigo_caja_fuerte += x
+            self.codigo_caja_fuerte += str(x)
         else:
             print("Lo siento, tus vidas se han acabado")
             self.game_over()
@@ -1086,7 +1154,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         #OJO AQUI
         x = random.randint(0,9)
         print("El número de esta sección es el:", x)
-        self.codigo_caja_fuerte += x
+        self.codigo_caja_fuerte += str(x)
         print("Excelente, has pasado todas las pruebas ahora solo escribe 'decifrar' para llegar a la bóveda y decifrar el código") #OJO AQUI
 
 
@@ -1242,6 +1310,240 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         else:
             print("Ufff, por poco pierdes, ahora si GANASTE")
         
+
+    def identificacion_falsa(self):
+        print("Escribe tu nombre falso, la edad, altura y peso se te asignaran pero ten en cuenta cuales fueron esos datos asignados, puede que después los ocupes")
+        self.nombre_policia = input("Nombre: ")
+        x = random.randint(28, 50)
+        self.edad_policia = str(x)
+        x = random.randint(20, 99)
+        self.altura_policia = str(100 + x)
+        x = random.randint(60, 90)
+        self.peso_policia = str(x)
+        id = """
+        ▓█▓▓▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓                                                           ▒░    
+        ▓▓▓▓▓▓▓▒▒▓▓▓██████▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                                                 
+        ▓▓▓▓▓▓▓▓▓█████████████▓▓▓▓▓▓▓▓▓▓    ▒▒  ▒▒  ▓▒▒▒ ░▒▒▓▒▒ ▒▒  ▒▒▒   ▒▓ ▒▒    ▓  ▓    ▓ ▓░          
+        ▓▓▓▓▓▓▓████████████████▓▓▓▓▓▓▓▓▓    ▒▒▒▒▒▒  ▒█▓▒  ▓▒▒█▒█▒█ ▓▒ ▒▓  ▒▓ ▒▒                          
+        ▓▓▓▓▓▓▓█████████▓▓██████▓▓▓▓▓▓▓▓    ▒▒  ▒▓ ▒▒▒▒▒▓ ▓▒▒ ▓▒▒ ░▒▒▒▒▒  ▒▓ ▒▒    ▓ ▓▒ ▒▒ ░ ▒ ▒         
+        ▓▓▓▓▓▓████▓▓▒▒▓▒▒▒░░▒▒▒██▓▓▓▓▓▓▓                                                                 
+        ▓▓▓▓▓█████▓▒▒░▒▒░░░░▒▒▒▓█▓▓▓▓▓▓▓                                                                 
+        ▓▓▓▓▓█████████▒░▒██████▒█▓▓▓▓▓▓▓       █▒ █▓██      █▓   █     █  ░ █ █ ▒                        
+        ▓▓▓▓▓▓█▒███████▓█▓███ ░ █▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   █       ▓   █ ▒  ▒                            
+        ▓▓▓▓▓█████▓███▓▒▓█▓▓▓▒ ▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░▓▓▓▓▓▓▓▓▓▓░                                        
+        ▓▓▓▓▓▓█▓▓▓▓▓▓▓▓▒▒▒▒░░░░░█▓▓▓▓▓▓▓░░░░█░██░░░███████████░█████▓▓▓ █▒ █ ░                           
+        ▓▓▓▓▓▓▓▓▓▓▓▓██▓▓█▒▒░░░░▓▓▓▓▓▓▓▓▓░░░░░░░░░░░█░█░░█░█░░░░█░██░▓▒▓▓▓▓▓▓  █ ██ █ █▓ █ █ █ █          
+        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒░░░░▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░▒░▓░░░░░██▓█░░░░░░░▓█▓▓▓▓▓▓  █ █                   
+        ▓▓▓▓▓▓▓▓▓▓▓▓██▓▓▒▒▒▒░░▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓▓▓                    
+        ▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▓▓▒█▒▒▒▒▒▒█░█░░░░░░ █ ░░░░░░▒░█░░░░░░░░█▓▓▓▓▓    ░           
+        ▓▓▓▓▓▓▓▓█▓██▓▓▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓▓            
+        ▓▓▓▓█▓▓▓▓▓█▓▓▓▓▓▓▒▒▒▒▒▒█▓▓▓▓▓▓▓▓    █  █     ▒█▒▒▒▓▓▓█▒▓░░░█▒▒▒ █░  ░░░░░░░██░░▒██░█░▓▓▓▓        
+        █▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒█▓▓▓▒▓▓▓▓▓                      ▒▓▓▓▓▓▓▓▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░▓▓▓▓     
+        ▓▓▓▓▓▓▓▓▓▓█▓▓▓▓▒▒░░░▓█▓▓▓▓▓▓▓▓▓█    █ ▓  █  ░ █       ░▒     ▓▒▒▒▒▒▒▒▒▒▒▒ ░░░░░░░░░░░░░░░░░░▓▓   
+                                                                            ▒▒▒▓▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░   
+
+                Nombre:      {}                                                                           
+                                                                                                
+                Edad:        {}                                                                     
+                                                                                                            
+                Altura       {}                                                                     
+                
+                Peso         {} 
+        """.format(self.nombre_policia, self.edad_policia, self.altura_policia, self.peso_policia)
+        print(id)
+        print("Si ya viste tus datos escribe 'listo' para continuar")
+
+
+    def checar(self):
+        vidas = 3
+        lista = [None]*5
+        tulista = [None]*5
+        num = ""
+        print("Instrucciones: Son 5 cajas, si ves que la cantidad de dinero coincide con la tuya escribe 'correcto' de lo contrario escribe 'reportar'")
+        a = 0
+        for i in range(5):
+            for j in range(6):
+                x = random.randint(0,9)
+                num += str(x)
+            lista[i] = num
+            a = random.randint(1,2)
+            if (i+1) % 2 != 0 and a == 2:
+                tulista[i] = num
+            else:
+                tulista[i] = str(int(num)-999)
+            num = ""
+        print(lista)
+        print(tulista)
+        i = 0
+        while i < 5 and self.vidas > 0:
+            if lista[i] == tulista[i]:
+                print("Número", i+1, ":")
+                resp = input()
+                if resp == "correcto":
+                    i += 1
+                else:
+                    self.vidas -= 1
+                    print("Incorrecto, pierdes una vida, vuelve a intentar\nVidas: ", vidas)
+            else:
+                print("Número", i+1, ":")
+                resp = input()
+                if resp == "reportar":
+                    i += 1
+                else:
+                    self.vidas -= 1
+                    print("Incorrecto, pierdes una vida, vuelve a intentar\nVidas: ", vidas)
+
+        if self.vidas == 0:
+            self.game_over()
+        else:
+            print("Felicidades, corroboraste el dinero en las cajas, escribe 'continuar' para seguir")
+            x = random.randint(0,9)
+            print("El número de esta sección es el:", x)
+            self.codigo_caja_fuerte += str(x)
+        
+    def caminar(self):
+        print("Caminando...")
+        time.sleep(4)
+        print("Listo, para entrar a las oficinas escribe 'seguir'")
+    
+    def hablar(self):
+        print("\t\t\t\t\t\tPolicia: Hola, como estás?")
+        resp = input()
+
+        if "tu" in resp.lower():
+            print("\t\t\t\t\t\tMmm como siempre, todo bien")
+        elif "bien" in resp.lower() or "excelente" in resp.lower() or "perfecto" in resp.lower() or "mas o menos" in resp.lower() or "feliz" in resp.lower() or "siempre" in resp.lower() or "genial" in resp.lower() or "normal" in resp.lower():
+            print("\t\t\t\t\t\tMe da gusto")
+        elif "mal" in resp.lower() or "pesimo" in resp.lower() or "cansado" in resp.lower() or "cansada" in resp.lower() or "enojado" in resp.lower() or "enojada" in resp.lower() or "aburrida" in resp.lower() or "aburrido" in resp.lower() or "flojera" in resp.lower() or "horrible" in resp.lower() or "triste" in resp.lower():
+            print("\t\t\t\t\t\tBueno espero que te cambie el animo")
+        print("\t\t\t\t\t\tY que haces por aqui?")
+        resp = input()
+        if "paseando" in resp.lower() or "caminando" in resp.lower() or "platicando" in resp.lower() or "vigilando" in resp.lower() or "checando" in resp.lower() or "hablando" in resp.lower() or "inspeccionando" in resp.lower() or "revisando" in resp.lower() or "comprobando" in resp.lower() or "corroborando" in resp.lower() or "asegurando" in resp.lower():
+            print("\t\t\t\t\t\tAaaa muy bien, bueno entonces sigue con eso para que puedas salir temprano")
+        elif "nada" in resp.lower():
+            print("\t\t\t\t\t\tMmm que aburrido eres pero bueno, tengo cosas que hacer, nos vemos luego")
+        elif "robando" in resp.lower() or "asaltando" in resp.lower() or "atracando" in resp.lower() or "infiltrado" in resp.lower() or "incognito" in resp.lower() or "sigiloso" in resp.lower():
+            self.game_over()
+        print("\t\t\t\t\t\tOye antes de que te vayas, quería preguntarte si tienes algo que hacer en la tarde")
+        resp = input()
+        if "se" in resp.lower():
+            print("\t\t\t\t\t\tEs que quería ver si estabas disponible para un partido de fut en la tarde")
+            resp = input()
+            if "si" in resp.lower() or "va" in resp.lower() or "sale" in resp.lower():
+                print("\t\t\t\t\t\tAa sale sale, entonces nos vemos en las canchas")
+                resp = input()
+            elif "no" in resp.lower():
+                print("\t\t\t\t\t\tMmm bueno no hay problema, para la otra")
+                resp = input()
+        elif "si" in resp.lower():
+            print("\t\t\t\t\t\tEs que era para un juego de fut pero bueno, si te desocupas me llamas si no ya nos veremos mañana")
+            resp = input()
+        elif "no":
+            print("\t\t\t\t\t\tA que bueno, quieres ir a un partido de futbol, con unos amigos?")
+            resp = input()
+            if "se" in resp.lower():
+                print("\t\t\t\t\t\tBueno si te desocupas me dices para que llegues")
+                resp = input()
+            elif "no" in resp.lower():
+                print("\t\t\t\t\t\tEsta bien, a ver si a la otra si quieres")
+                resp = input()
+            elif "si" in resp.lower():
+                print("\t\t\t\t\t\tVa nos vemos en la noche")
+                resp = input()
+
+        print("Perfecto, terminaste de hablar con el policia y no sospecho, escribe 'seguir' para continuar")
+        x = random.randint(0,9)
+        print("El número de esta sección es el:", x)
+        self.codigo_caja_fuerte += str(x)
+
+    def datos(self):
+        print("Tu cara se me hace desconocida, eres nuevo ?, bueno no importa, te haré unas preguntas y veré si coinciden con tu identificación")
+        resp = input("Cual es tu nombre?")
+        if resp.lower() == self.nombre_policia:
+            print("Correcto")
+        else:
+            print("Eres un infiltrado")
+            self.game_over()
+        resp = input("Cual es tu peso?")
+        if resp == self.altura_policia:
+            print("Mmm bien")
+        else:
+            print("Eres un infiltrado")
+            self.game_over()
+        resp = input("Cuántos años tienes?")
+        if resp == self.edad_policia:
+            print("Ok, una pregunta más")
+        else:
+            print("Eres un infiltrado")
+            self.game_over()
+        resp = input("Cuánto mides?")
+        if resp == self.altura_policia:
+            print("Esta bien, si eres un policia")
+        else:
+            print("Eres un infiltrado")
+            self.game_over()
+        print("Muy bien, supiste responder las preguntas, escribe 'seguir' para ir a la última sección")
+        x = random.randint(0,9)
+        print("El número de esta sección es el:", x)
+        self.codigo_caja_fuerte += str(x)
+    
+    def cables(self):
+        print("Has llegado a seguridad... y tendras que conectar cables")
+        print("Instrucciones: Tendrás que escribir la posición del número de arriba, empezando de izquierda a derecha, y después escribir la posición del número de abajo al cual lo relacionarás")
+        print("Ejemplo: El cable en la posición 1 lo unirás con el cable en la posición 7 y lo tienes que escribir en este formato sino perderás : '1:7'")
+
+        lista = [None]*5
+        lista_revuelta = [None]*5
+        for i in range(5):
+            x = random.randint(0,9)
+            lista[i] = x
+        lista_revuelta = lista.copy()
+        random.shuffle(lista_revuelta)
+
+        cables = """
+            {}    {}    {}    {}    {}
+            █    █    █    █    █
+            █    █    █    █    █
+            █    █    █    █    █
+            █    █    █    █    █
+            █    █    █    █    █
+            █    █    █    █    █
+            {}    {}    {}    {}    {}
+        """.format(lista[0], lista[1], lista[2], lista[3], lista[4], lista_revuelta[0], lista_revuelta[1], lista_revuelta[2], lista_revuelta[3], lista_revuelta[4])
+
+        aux = ""
+        intentos = 2
+        i = 0
+
+        while i < 5:
+            print(cables)
+            aux = ""
+            x = lista_revuelta.index(lista[i]) + 1
+            aux += str(i+1) + ":" + str(x)
+            #print(aux)
+            resp = input("Ingresa tu respuesta:")
+            if resp == aux:
+                print("Muy bien")
+                i += 1
+            else:
+                intentos -= 1
+                print("Incorrecto, vuelve a intentarlo\nTe quedan:", intentos, "intentos")
+            if intentos == 0:
+                self.vidas -= 1
+                intentos = 2
+                if self.vidas > 0:
+                    print("Perdiste una vida, vuelve a intentarlo", "\nVidas:", self.vidas)
+                else:
+                    print("Se te acabaron tus vidas")
+                    self.game_over()
+            time.sleep(2)
+            os.system('cls' if os.name == 'nt' else 'clear')
+        x = random.randint(0,9)
+        print("El número de esta sección es el:", x)
+        self.codigo_caja_fuerte += str(x)
+        print("Escribe 'decifrar' para poner el código en la caja fuerte")
+
+    
 nom = input("Ingresa tu nombre: ")
 print("Cargando...")
 time.sleep(2) 
