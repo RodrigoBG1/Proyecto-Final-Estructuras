@@ -8,35 +8,6 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 
-class CompressorGUI:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Compressor GUI")
-
-        # Botones
-        self.compress_button = tk.Button(self.root, text="Comprimir", command=self.compress_file)
-        self.compress_button.pack(pady=10)
-
-        self.decompress_button = tk.Button(self.root, text="Descomprimir", command=self.decompress_file)
-        self.decompress_button.pack(pady=10)
-
-    def compress_file(self):
-        file_path = filedialog.askopenfilename(title="Seleccionar archivo para comprimir", filetypes=[("Todos los archivos", "*.*")])
-        if file_path:
-            # Lógica para comprimir el archivo aquí
-            print(f"Comprimiendo archivo: {file_path}")
-
-    def decompress_file(self):
-        file_path = filedialog.askopenfilename(title="Seleccionar archivo para descomprimir", filetypes=[("Todos los archivos", "*.*")])
-        if file_path:
-            # Lógica para descomprimir el archivo aquí
-            print(f"Descomprimiendo archivo: {file_path}")
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = CompressorGUI(root)
-    root.mainloop()
-
 class Node:
     def __init__(self, simbolo = None, frecuencia = 0, hijo_izq = None, hijo_der = None):
         self.simbolo = simbolo
@@ -97,7 +68,7 @@ class Text:
                 texto_recuperado += nodo_actual.simbolo
                 nodo_actual = arbol_huffman
 
-        with open("C:/Users/Rodrigo/OneDrive/Documentos/Compresor/descomprimido.txt", 'w') as file:
+        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_txt\Texto_Descomprimido.txt", 'w') as file:
             file.write(texto_recuperado)
 
         return texto_recuperado
@@ -106,25 +77,24 @@ class Text:
 class Imagen:
     def obtener_imagen(self, direccion):
         with open(direccion,'rb') as file:
-            text = file.read() 
-        return text
+            imagen = file.read() 
+        return imagen
 
     def frecuencia_simbolos(self, direccion):
-        frecuencia_letras = {}
+        frecuencia_bytes = {}
         with open(direccion,'rb') as file:
-            text = file.read()
-        for caracter in text:
-            frecuencia_letras[caracter] = frecuencia_letras.get(caracter, 0) + 1
-        return frecuencia_letras
+            imagen = file.read()
+        for byte in imagen:
+            frecuencia_bytes[byte] = frecuencia_bytes.get(byte, 0) + 1
+        return frecuencia_bytes
     
-    def codificar_texto(self, texto, diccionario):
-        texto_codificado = ''.join(diccionario[caracter] for caracter in texto)
-        """print(texto_codificado)"""
-        return texto_codificado
+    def codificar_imagen(self, imagen, diccionario):
+        imagen_codificado = ''.join(diccionario[byte] for byte in imagen)
+        return imagen_codificado
     
-    def comprimir(self, diccionario, texto, archivo_salida, arbol_huffman, archivo_salida_arbol):
+    def comprimir(self, diccionario, imagen, archivo_salida, arbol_huffman, archivo_salida_arbol):
         s = bitarray()
-        s.encode({simbolo: bitarray(code) for simbolo, code in diccionario.items()}, texto)
+        s.encode({simbolo: bitarray(code) for simbolo, code in diccionario.items()}, imagen)
         with open(archivo_salida, 'wb') as file:
             s.tofile(file)
         with open(archivo_salida_arbol, 'wb') as file:
@@ -137,10 +107,10 @@ class Imagen:
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
         
-        self.decodificar_texto(comprimido, arbol)
+        self.decodificar_imagen(comprimido, arbol)
     
-    def decodificar_texto(self, bits, arbol_huffman):
-        texto_recuperado = bytearray()
+    def decodificar_imagen(self, bits, arbol_huffman):
+        imagen_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
         for bit in bits:
@@ -150,37 +120,37 @@ class Imagen:
                 nodo_actual = nodo_actual.hijo_der
 
             if nodo_actual.simbolo is not None:
-                texto_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
+                imagen_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
                 nodo_actual = arbol_huffman
 
-        with open("C:/Users/Rodrigo/OneDrive/Documentos/Compresor/descomprimido.jpg", 'wb') as file:
-            file.write(texto_recuperado)
+        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_imagenes\Imagen_Descomprimida.bmp", 'wb') as file:
+            file.write(imagen_recuperado)
 
-        return texto_recuperado
+        return imagen_recuperado
     
     
-class Aduio:
-    def obtener_imagen(self, direccion):
+class Audio:
+    def obtener_audio(self, direccion):
         with open(direccion,'rb') as file:
-            text = file.read() 
-        return text
+            audio = file.read() 
+        return audio
 
     def frecuencia_simbolos(self, direccion):
-        frecuencia_letras = {}
+        frecuencia_bytes = {}
         with open(direccion,'rb') as file:
-            text = file.read()
-        for caracter in text:
-            frecuencia_letras[caracter] = frecuencia_letras.get(caracter, 0) + 1
-        return frecuencia_letras
+            audio = file.read()
+        for byte in audio:
+            frecuencia_bytes[byte] = frecuencia_bytes.get(byte, 0) + 1
+        return frecuencia_bytes
     
-    def codificar_texto(self, texto, diccionario):
-        texto_codificado = ''.join(diccionario[caracter] for caracter in texto)
+    def codificar_audio(self, audio, diccionario):
+        audio_codificado = ''.join(diccionario[byte] for byte in audio)
         """print(texto_codificado)"""
-        return texto_codificado
+        return audio_codificado
     
-    def comprimir(self, diccionario, texto, archivo_salida, arbol_huffman, archivo_salida_arbol):
+    def comprimir(self, diccionario, audio, archivo_salida, arbol_huffman, archivo_salida_arbol):
         s = bitarray()
-        s.encode({simbolo: bitarray(code) for simbolo, code in diccionario.items()}, texto)
+        s.encode({simbolo: bitarray(code) for simbolo, code in diccionario.items()}, audio)
         with open(archivo_salida, 'wb') as file:
             s.tofile(file)
         with open(archivo_salida_arbol, 'wb') as file:
@@ -193,10 +163,10 @@ class Aduio:
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
         
-        self.decodificar_texto(comprimido, arbol)
+        self.decodificar_audio(comprimido, arbol)
     
-    def decodificar_texto(self, bits, arbol_huffman):
-        texto_recuperado = bytearray()
+    def decodificar_audio(self, bits, arbol_huffman):
+        audio_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
         for bit in bits:
@@ -206,36 +176,35 @@ class Aduio:
                 nodo_actual = nodo_actual.hijo_der
 
             if nodo_actual.simbolo is not None:
-                texto_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
+                audio_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
                 nodo_actual = arbol_huffman
 
-        with open("C:/Users/Rodrigo/OneDrive/Documentos/Compresor/descomprimido.wav", 'wb') as file:
-            file.write(texto_recuperado)
+        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_audio\Audio_Descomprimido.wav", 'wb') as file:
+            file.write(audio_recuperado)
 
-        return texto_recuperado
+        return audio_recuperado
     
 class Video:
-    def obtener_imagen(self, direccion):
+    def obtener_video(self, direccion):
         with open(direccion,'rb') as file:
-            text = file.read() 
-        return text
+            video = file.read() 
+        return video
 
     def frecuencia_simbolos(self, direccion):
-        frecuencia_letras = {}
+        frecuencia_bytes = {}
         with open(direccion,'rb') as file:
-            text = file.read()
-        for caracter in text:
-            frecuencia_letras[caracter] = frecuencia_letras.get(caracter, 0) + 1
-        return frecuencia_letras
+            video = file.read()
+        for byte in video:
+            frecuencia_bytes[byte] = frecuencia_bytes.get(byte, 0) + 1
+        return frecuencia_bytes
     
-    def codificar_texto(self, texto, diccionario):
-        texto_codificado = ''.join(diccionario[caracter] for caracter in texto)
-        """print(texto_codificado)"""
-        return texto_codificado
+    def codificar_video(self, video, diccionario):
+        video_codificado = ''.join(diccionario[byte] for byte in video)
+        return video_codificado
     
-    def comprimir(self, diccionario, texto, archivo_salida, arbol_huffman, archivo_salida_arbol):
+    def comprimir(self, diccionario, video, archivo_salida, arbol_huffman, archivo_salida_arbol):
         s = bitarray()
-        s.encode({simbolo: bitarray(code) for simbolo, code in diccionario.items()}, texto)
+        s.encode({simbolo: bitarray(code) for simbolo, code in diccionario.items()}, video)
         with open(archivo_salida, 'wb') as file:
             s.tofile(file)
         with open(archivo_salida_arbol, 'wb') as file:
@@ -248,10 +217,10 @@ class Video:
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
         
-        self.decodificar_texto(comprimido, arbol)
+        self.decodificar_video(comprimido, arbol)
     
-    def decodificar_texto(self, bits, arbol_huffman):
-        texto_recuperado = bytearray()
+    def decodificar_video(self, bits, arbol_huffman):
+        video_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
         for bit in bits:
@@ -261,13 +230,13 @@ class Video:
                 nodo_actual = nodo_actual.hijo_der
 
             if nodo_actual.simbolo is not None:
-                texto_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
+                video_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
                 nodo_actual = arbol_huffman
 
-        with open("C:/Users/Rodrigo/OneDrive/Documentos/Compresor/descomprimido.mov", 'wb') as file:
-            file.write(texto_recuperado)
+        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_video\Video_Descomprimido.mov", 'wb') as file:
+            file.write(video_recuperado)
 
-        return texto_recuperado
+        return video_recuperado
     
 
 
@@ -296,72 +265,116 @@ class Huffman:
             self.diccionario_codigos_nuevos(arbol_huffman.hijo_der, codigo + '1', diccionario)
         """print(diccionario)"""
         return diccionario
-             
-        
 
-Obj = Huffman()
 
-#-------Texto---------
 
-Obj1 = Text()
-Direccion = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/input.txt"
-frecuencia_letras = Obj1.frecuencia_simbolos(Direccion)
-arbol_de_huffman = Obj.generar_arbol_huffman(frecuencia_letras)
-diccionario_codigos_nuevos = Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-"""print(diccionario_codigos_nuevos)"""
-text = Obj1.obtener_texto(Direccion)
+class Interface:
+    def __init__(self):
+        self.file_path_compress = None
+        self.file_path_decompress = None
+        self.extension = None
+        self.file_arbol = None
+        self.file_archivo = None
+        self.Obj = Huffman()
+        self.Obj1 = Text()
+        self.Obj2 = Imagen()
+        self.Obj3 = Audio()
+        self.Obj4 = Video()
 
-texto_codificado = Obj1.codificar_texto(text, diccionario_codigos_nuevos)
+    def select_file_compress(self):
+        self.file_path_compress = filedialog.askopenfilename(title="Seleccionar archivo para comprimir", filetypes=[("Todos los archivos", "*.*")])
+        index = self.file_path_compress.find("OneDrive")
+        self.file_path_compress = self.file_path_compress[index:]
+        if self.file_path_compress:
+            entry.delete(0, tk.END) 
+            entry.insert(0, self.file_path_compress)
+    
+    def select_file_decompress(self):
+        self.file_path_decompress = filedialog.askopenfilename(title="Seleccionar archivo para comprimir", filetypes=[("Todos los archivos", "*.*")])
+        index = self.file_path_decompress.find("OneDrive")
+        self.file_path_decompress = self.file_path_decompress[index:]
+        if self.file_path_decompress:
+            entry2.delete(0, tk.END) 
+            entry2.insert(0, self.file_path_decompress)
 
-archivo_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/o.bin"
-archivo_huff_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/o.pkl"
-Obj1.comprimir(diccionario_codigos_nuevos, text, archivo_comprimido,arbol_de_huffman , archivo_huff_comprimido)
-Obj1.descomprimir(archivo_comprimido, archivo_huff_comprimido)
+    def compress_file(self):
+        self.extension = os.path.splitext(self.file_path_compress)[1]
+        self.file_archivo = os.path.normpath(os.path.join(os.path.dirname(self.file_path_compress), "Comprimido.bin"))
+        self.file_arbol = os.path.normpath(os.path.join(os.path.dirname(self.file_path_compress), "Arbol.bin"))
 
-#-------Imagen-------
+        try:
+            if self.extension == ".txt":
+                frecuencia_letras = self.Obj1.frecuencia_simbolos(self.file_path_compress)
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_letras)
+                text = self.Obj1.obtener_texto(self.file_path_compress)
+                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
+                self.Obj1.comprimir(diccionario_codigos_nuevos, text, self.file_archivo, arbol_de_huffman , self.file_arbol)
+            elif self.extension == ".bmp" or self.extension == ".png" or self.extension == ".jpg":
+                frecuencia_bytes = self.Obj2.frecuencia_simbolos(self.file_path_compress)
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes) 
+                imagen = self.Obj2.obtener_imagen(self.file_path_compress) 
+                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
+                self.Obj2.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
+            elif self.extension == ".mp3" or self.extension == ".wav":
+                frecuencia_bytes = self.Obj3.frecuencia_simbolos(self.file_path_compress)
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes)
+                audio = self.Obj3.obtener_audio(self.file_path_compress)
+                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
+                self.Obj3.comprimir(diccionario_codigos_nuevos, audio, self.file_archivo, arbol_de_huffman , self.file_arbol)
+            elif self.extension == ".mov":
+                frecuencia_bytes = self.Obj4.frecuencia_simbolos(self.file_path_compress)
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes)
+                video = self.Obj4.obtener_video(self.file_path_compress)
+                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
+                self.Obj4.comprimir(diccionario_codigos_nuevos, video, self.file_archivo, arbol_de_huffman , self.file_arbol)
+            else:
+                print("No se reconocio la extensión")
 
-Obj2 = Imagen()
-Direccion = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/img.bmp"
-frecuencia_letras = Obj2.frecuencia_simbolos(Direccion)
-arbol_de_huffman = Obj.generar_arbol_huffman(frecuencia_letras)
-diccionario_codigos_nuevos = Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-text = Obj2.obtener_imagen(Direccion)
+        except FileNotFoundError:
+            entry.delete(0, tk.END)
+            entry.insert(0, "Archivo no encontrado")
 
-texto_codificado = Obj2.codificar_texto(text, diccionario_codigos_nuevos)
+    def decompress_file(self):
+        try:
+            if self.extension == ".txt":
+                self.Obj1.descomprimir(self.file_archivo, self.file_arbol)
+            elif self.extension == ".bmp" or self.extension == ".png" or self.extension == ".jpg":
+                self.Obj2.descomprimir(self.file_archivo, self.file_arbol)
+            elif self.extension == ".mp3" or self.extension == ".wav":
+                self.Obj3.descomprimir(self.file_archivo, self.file_arbol)
+            elif self.extension == ".mov":
+                self.Obj4.descomprimir(self.file_archivo, self.file_arbol)
+            else:
+                print("No se reconocio la extensión")
 
-archivo_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/img.bin"
-archivo_huff_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/arbol.pkl"
-Obj2.comprimir(diccionario_codigos_nuevos, text, archivo_comprimido,arbol_de_huffman , archivo_huff_comprimido)
-Obj2.descomprimir(archivo_comprimido, archivo_huff_comprimido)
+        except FileNotFoundError:
+            entry.delete(0, tk.END)
+            entry.insert(0, "Archivo no encontrado")
 
-#---------Audio-----------
 
-Obj3 = Aduio()
-Direccion = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/intro.wav"
-frecuencia_letras = Obj3.frecuencia_simbolos(Direccion)
-arbol_de_huffman = Obj.generar_arbol_huffman(frecuencia_letras)
-diccionario_codigos_nuevos = Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-text = Obj3.obtener_imagen(Direccion)
+interface = Interface()
 
-texto_codificado = Obj3.codificar_texto(text, diccionario_codigos_nuevos)
+ventana = tk.Tk()
+ventana.title("Ejemplo de Interfaz")
 
-archivo_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/aud.zip"
-archivo_huff_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/arb.pkl"
-Obj3.comprimir(diccionario_codigos_nuevos, text, archivo_comprimido,arbol_de_huffman , archivo_huff_comprimido)
-Obj3.descomprimir(archivo_comprimido, archivo_huff_comprimido)
 
-#---------Video-----------
+entry = tk.Entry(ventana)
+entry.grid(row=0, column=0, padx=60, pady=20)
 
-Obj4 = Video()
-Direccion = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/vid.mov"
-frecuencia_letras = Obj4.frecuencia_simbolos(Direccion)
-arbol_de_huffman = Obj.generar_arbol_huffman(frecuencia_letras)
-diccionario_codigos_nuevos = Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-text = Obj4.obtener_imagen(Direccion)
+button = tk.Button(ventana, text="Selecciona tu archivo", command=interface.select_file_compress)
+button.grid(row=1, column=0, padx=28, pady=20)
 
-texto_codificado = Obj4.codificar_texto(text, diccionario_codigos_nuevos)
+button2 = tk.Button(ventana, text="Comprimir", command=interface.compress_file)
+button2.grid(row=1, column=1, padx=28, pady=20)
 
-archivo_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/vid.zip"
-archivo_huff_comprimido = "C:/Users/Rodrigo/OneDrive/Documentos/Compresor/a.pkl"
-Obj4.comprimir(diccionario_codigos_nuevos, text, archivo_comprimido,arbol_de_huffman , archivo_huff_comprimido)
-Obj4.descomprimir(archivo_comprimido, archivo_huff_comprimido)
+
+entry2 = tk.Entry(ventana)
+entry2.grid(row=2, column=0, padx=60, pady=20)
+
+button3 = tk.Button(ventana, text="Selecciona tu archivo", command=interface.select_file_decompress)
+button3.grid(row=3, column=0, padx=28, pady=20)
+
+button4 = tk.Button(ventana, text="Descomprimir", command=interface.decompress_file)
+button4.grid(row=3, column=1, padx=28, pady=20)
+
+ventana.mainloop()
