@@ -46,14 +46,12 @@ class Text:
             pickle.dump(arbol_huffman, file)
 
     def descomprimir(self, archivo_salida, archivo_salida_arbol, archivo_descomprimido):
-        with open(archivo_salida, 'rb') as file:
+        with open(archivo_salida, 'rb')as file:
             comprimido = bitarray()
             comprimido.fromfile(file)
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
-        carpeta_original, nombre_original = os.path.split(archivo_descomprimido)
-        archivo_descomprimido = os.path.join(carpeta_original, f"Descomprimido_{nombre_original}")
-
+        
         self.decodificar_texto(comprimido, arbol, archivo_descomprimido)
     
     def decodificar_texto(self, bits, arbol_huffman, archivo_descomprimido):
@@ -221,7 +219,7 @@ class Video:
         
         self.decodificar_video(comprimido, arbol, archivo_descomprimido)
     
-    def decodificar_video(self, bits, arbol_huffman,archivo_descomprimido):
+    def decodificar_video(self, bits, arbol_huffman, archivo_descomprimido):
         video_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
@@ -237,7 +235,7 @@ class Video:
 
         with open(archivo_descomprimido, 'wb') as file:
             file.write(video_recuperado)
-            
+
         return video_recuperado
     
 
@@ -275,8 +273,10 @@ class Interface:
         self.file_path_compress = None
         self.file_path_decompress = None
         self.extension = None
+        self.extension_des = None
         self.file_arbol = None
         self.file_archivo = None
+        self.file_archivo_des = None
         self.Obj = Huffman()
         self.Obj1 = Text()
         self.Obj2 = Imagen()
@@ -317,18 +317,18 @@ class Interface:
                 imagen = self.Obj2.obtener_imagen(self.file_path_compress) 
                 diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
                 self.Obj2.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
-            elif self.extension == ".mp3" or self.extension == ".wav":
+            elif self.extension == ".wav" or self.extension == ".mp3":
                 frecuencia_bytes = self.Obj3.frecuencia_simbolos(self.file_path_compress)
-                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes) 
-                imagen = self.Obj3.obtener_audio(self.file_path_compress) 
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes)
+                audio = self.Obj3.obtener_audio(self.file_path_compress)
                 diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-                self.Obj3.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
+                self.Obj3.comprimir(diccionario_codigos_nuevos, audio, self.file_archivo, arbol_de_huffman , self.file_arbol)
             elif self.extension == ".mov":
                 frecuencia_bytes = self.Obj4.frecuencia_simbolos(self.file_path_compress)
-                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes) 
-                imagen = self.Obj4.obtener_video(self.file_path_compress) 
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes)
+                video = self.Obj4.obtener_video(self.file_path_compress)
                 diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
-                self.Obj4.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
+                self.Obj4.comprimir(diccionario_codigos_nuevos, video, self.file_archivo, arbol_de_huffman , self.file_arbol)
             else:
                 print("No se reconocio la extensión")
 
@@ -337,25 +337,37 @@ class Interface:
             entry.insert(0, "Archivo no encontrado")
 
     def decompress_file(self):
+        self.file_archivo = os.path.normpath(os.path.join(os.path.dirname(self.file_path_decompress), "Comprimido.bin"))
+        self.file_arbol = os.path.normpath(os.path.join(os.path.dirname(self.file_path_decompress), "Arbol.bin"))
         try:
-            if self.extension == ".txt":
-                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Texto_Descomprimido.txt")
+            if self.extension_des == ".txt":
+                archivo_descomprimido = self.file_path_decompress.replace("Comprimido.bin", "Texto_Descomprimido.txt")
                 self.Obj1.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
-            elif self.extension == ".bmp" or self.extension == ".png" or self.extension == ".jpg":
-                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Imagen_Descomprimida.bmp")
+            elif self.extension_des == ".bmp" or self.extension_des == ".png" or self.extension_des == ".jpg":
+                archivo_descomprimido = self.file_path_decompress.replace("Comprimido.bin", "Imagen_Descomprimido.bmp")
                 self.Obj2.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
-            elif self.extension == ".mp3" or self.extension == ".wav":
-                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Audio_Descomprimido.wav")
+            elif self.extension_des == ".wav" or self.extension_des == ".mp3":
+                archivo_descomprimido = self.file_path_decompress.replace("Comprimido.bin", "Audio_Descomprimido.wav")
                 self.Obj3.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
-            elif self.extension == ".mov":
-                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Video_Descomprimido.mov")
+            elif self.extension_des == ".mov":
+                archivo_descomprimido = self.file_path_decompress.replace("Comprimido.bin", "Video_Descomprimido.mov")
                 self.Obj4.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
             else:
-                print("No se reconoció la extensión")
+                print("No se reconocio la extensión")
 
         except FileNotFoundError:
             entry.delete(0, tk.END)
             entry.insert(0, "Archivo no encontrado")
+
+    def text(self):
+        self.extension_des = ".txt"
+    def image(self):
+        self.extension_des = ".bmp"
+    def audio(self):
+        self.extension_des = ".wav"
+    def video(self):
+        self.extension_des = ".mov"
+
 
 
 interface = Interface()
@@ -375,12 +387,27 @@ button2.grid(row=1, column=1, padx=28, pady=20)
 
 
 entry2 = tk.Entry(ventana)
-entry2.grid(row=2, column=0, padx=60, pady=20)
+entry2.grid(row=3, column=0, padx=60, pady=20)
+
+
+button5 = tk.Button(ventana, text="Texto", command=interface.text)
+button5.grid(row=2, column=0, padx=28, pady=20)
+
+button6 = tk.Button(ventana, text="Imagen", command=interface.image)
+button6.grid(row=2, column=1, padx=28, pady=20)
+
+button7 = tk.Button(ventana, text="Audio", command=interface.audio)
+button7.grid(row=2, column=2, padx=28, pady=20)
+
+button8 = tk.Button(ventana, text="Video", command=interface.video)
+button8.grid(row=2, column=3, padx=28, pady=20)
+
+
 
 button3 = tk.Button(ventana, text="Selecciona tu archivo", command=interface.select_file_decompress)
-button3.grid(row=3, column=0, padx=28, pady=20)
+button3.grid(row=4, column=0, padx=28, pady=20)
 
 button4 = tk.Button(ventana, text="Descomprimir", command=interface.decompress_file)
-button4.grid(row=3, column=1, padx=28, pady=20)
+button4.grid(row=4, column=1, padx=28, pady=20)
 
 ventana.mainloop()
