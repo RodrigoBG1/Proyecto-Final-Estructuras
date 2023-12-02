@@ -253,7 +253,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             },
 
                 "Pasillo": {
-                    "mensaje": "Excelente, después de sacar un poco de dinero ahora te encuentras en un pasillo lleno de cámaras y para llegar a la bóbeda a fuerzas tienes que pasar por el,\n\t\t\t\t\t\t\t escribe 'vamos' para avanzar por el pasillo",
+                    "mensaje": "Excelente, después de sacar un poco de dinero ahora te encuentras en un pasillo lleno de cámaras y para llegar a la bóbeda\n\t\t\t\t\t\t\t a fuerzas tienes que pasar por el, escribe 'vamos' para avanzar por el pasillo",
                     "opciones":{
                         "vamos": self.minijuego_mano_1,
                         "avanzar": "Oficinas"
@@ -618,7 +618,10 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
     def perder_vida(self):
         self.vidas -= 1
-        print("Perdiste una vida, te quedan:", self.vidas, "escribe 'regresar'")
+        if self.vidas == 0:
+            self.game_over()
+        else:
+            print("Perdiste una vida, te quedan:", self.vidas, "escribe 'regresar'")
     
     def minijuego_0(self):
         print("\nLlegaste a un pasillo donde hay cámaras que cambian de lado cada 2 segundos, primero apuntan\na la izquierda y luego a la derecha pero si te pones abajo de la cámara la evitarás")
@@ -863,10 +866,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print("Se acabó el tiempo")
         dinero_robado = lector.contador * 19999
         print("Lograste robar $", dinero_robado)
-        x = random.randint(0,9)
-        print("El número de esta sección es el:", x)
-        self.codigo_caja_fuerte += str(x)
-        print("Escribe 'seguir' para continuar el asalto")
+        if dinero_robado != 0:
+            x = random.randint(0,9)
+            print("El número de esta sección es el:", x)
+            self.codigo_caja_fuerte += str(x)
+        else:
+            print("No robaste nada, no te podemos dar el número, tendrás que adivinarlo al final")
+        print("Da enter y escribe 'seguir' para continuar el asalto") 
 
     def decifrar_caja_fuerte(self):
         def botton_1():
@@ -1221,7 +1227,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             for clave, valor in diccionario.items():
                 if codigos[i] == valor:
                     aux += str(clave)
-        print(aux.lower())
+        """print(aux.lower())"""
 
         class Temporizador(threading.Thread):
             def __init__(self, duracion):
@@ -1345,7 +1351,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 print("Felicidaaaaadeeeeees!!!!!!, Lograste entrar a la caja fuerte")
                 print("Fin del juego")
                 time.sleep(3)
-                self.minijuego_mano_5
+                self.minijuego_mano_5()
             else:
                 if self.intentos_caja_fuerte > 0:
                     print("Ese no es el número, te quedan", self.intentos_caja_fuerte, "más")
