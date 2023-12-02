@@ -45,16 +45,18 @@ class Text:
         with open(archivo_salida_arbol, 'wb') as file:
             pickle.dump(arbol_huffman, file)
 
-    def descomprimir(self, archivo_salida, archivo_salida_arbol):
-        with open(archivo_salida, 'rb')as file:
+    def descomprimir(self, archivo_salida, archivo_salida_arbol, archivo_descomprimido):
+        with open(archivo_salida, 'rb') as file:
             comprimido = bitarray()
             comprimido.fromfile(file)
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
-        
-        self.decodificar_texto(comprimido, arbol)
+        carpeta_original, nombre_original = os.path.split(archivo_descomprimido)
+        archivo_descomprimido = os.path.join(carpeta_original, f"Descomprimido_{nombre_original}")
+
+        self.decodificar_texto(comprimido, arbol, archivo_descomprimido)
     
-    def decodificar_texto(self, bits, arbol_huffman):
+    def decodificar_texto(self, bits, arbol_huffman, archivo_descomprimido):
         texto_recuperado = ""
         nodo_actual = arbol_huffman
 
@@ -68,7 +70,7 @@ class Text:
                 texto_recuperado += nodo_actual.simbolo
                 nodo_actual = arbol_huffman
 
-        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_txt\Texto_Descomprimido.txt", 'w') as file:
+        with open(archivo_descomprimido, 'w') as file:
             file.write(texto_recuperado)
 
         return texto_recuperado
@@ -100,16 +102,16 @@ class Imagen:
         with open(archivo_salida_arbol, 'wb') as file:
             pickle.dump(arbol_huffman, file)
 
-    def descomprimir(self, archivo_salida, archivo_salida_arbol):
+    def descomprimir(self, archivo_salida, archivo_salida_arbol, archivo_descomprimido):
         with open(archivo_salida, 'rb')as file:
             comprimido = bitarray()
             comprimido.fromfile(file)
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
         
-        self.decodificar_imagen(comprimido, arbol)
+        self.decodificar_imagen(comprimido, arbol, archivo_descomprimido)
     
-    def decodificar_imagen(self, bits, arbol_huffman):
+    def decodificar_imagen(self, bits, arbol_huffman, archivo_descomprimido):
         imagen_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
@@ -123,7 +125,7 @@ class Imagen:
                 imagen_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
                 nodo_actual = arbol_huffman
 
-        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_imagenes\Imagen_Descomprimida.bmp", 'wb') as file:
+        with open(archivo_descomprimido, 'wb') as file:
             file.write(imagen_recuperado)
 
         return imagen_recuperado
@@ -156,16 +158,16 @@ class Audio:
         with open(archivo_salida_arbol, 'wb') as file:
             pickle.dump(arbol_huffman, file)
 
-    def descomprimir(self, archivo_salida, archivo_salida_arbol):
+    def descomprimir(self, archivo_salida, archivo_salida_arbol, archivo_descomprimido):
         with open(archivo_salida, 'rb')as file:
             comprimido = bitarray()
             comprimido.fromfile(file)
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
         
-        self.decodificar_audio(comprimido, arbol)
+        self.decodificar_audio(comprimido, arbol, archivo_descomprimido)
     
-    def decodificar_audio(self, bits, arbol_huffman):
+    def decodificar_audio(self, bits, arbol_huffman, archivo_descomprimido):
         audio_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
@@ -179,7 +181,7 @@ class Audio:
                 audio_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
                 nodo_actual = arbol_huffman
 
-        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_audio\Audio_Descomprimido.wav", 'wb') as file:
+        with open(archivo_descomprimido, 'wb') as file:
             file.write(audio_recuperado)
 
         return audio_recuperado
@@ -210,16 +212,16 @@ class Video:
         with open(archivo_salida_arbol, 'wb') as file:
             pickle.dump(arbol_huffman, file)
 
-    def descomprimir(self, archivo_salida, archivo_salida_arbol):
+    def descomprimir(self, archivo_salida, archivo_salida_arbol, archivo_descomprimido):
         with open(archivo_salida, 'rb')as file:
             comprimido = bitarray()
             comprimido.fromfile(file)
         with open(archivo_salida_arbol, 'rb') as file:
             arbol = pickle.load(file)
         
-        self.decodificar_video(comprimido, arbol)
+        self.decodificar_video(comprimido, arbol, archivo_descomprimido)
     
-    def decodificar_video(self, bits, arbol_huffman):
+    def decodificar_video(self, bits, arbol_huffman,archivo_descomprimido):
         video_recuperado = bytearray()
         nodo_actual = arbol_huffman
 
@@ -233,9 +235,9 @@ class Video:
                 video_recuperado.append(nodo_actual.simbolo)  # convert to string before concatenating
                 nodo_actual = arbol_huffman
 
-        with open("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Pruebas_video\Video_Descomprimido.mov", 'wb') as file:
+        with open(archivo_descomprimido, 'wb') as file:
             file.write(video_recuperado)
-
+            
         return video_recuperado
     
 
@@ -316,9 +318,17 @@ class Interface:
                 diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
                 self.Obj2.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
             elif self.extension == ".mp3" or self.extension == ".wav":
-                pass
+                frecuencia_bytes = self.Obj3.frecuencia_simbolos(self.file_path_compress)
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes) 
+                imagen = self.Obj3.obtener_audio(self.file_path_compress) 
+                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
+                self.Obj3.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
             elif self.extension == ".mov":
-                pass
+                frecuencia_bytes = self.Obj4.frecuencia_simbolos(self.file_path_compress)
+                arbol_de_huffman = self.Obj.generar_arbol_huffman(frecuencia_bytes) 
+                imagen = self.Obj4.obtener_video(self.file_path_compress) 
+                diccionario_codigos_nuevos = self.Obj.diccionario_codigos_nuevos(arbol_de_huffman)
+                self.Obj4.comprimir(diccionario_codigos_nuevos, imagen, self.file_archivo, arbol_de_huffman , self.file_arbol)
             else:
                 print("No se reconocio la extensión")
 
@@ -329,15 +339,19 @@ class Interface:
     def decompress_file(self):
         try:
             if self.extension == ".txt":
-                self.Obj1.descomprimir(self.file_archivo, self.file_arbol)
+                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Texto_Descomprimido.txt")
+                self.Obj1.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
             elif self.extension == ".bmp" or self.extension == ".png" or self.extension == ".jpg":
-                self.Obj2.descomprimir(self.file_archivo, self.file_arbol)
+                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Imagen_Descomprimida.bmp")
+                self.Obj2.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
             elif self.extension == ".mp3" or self.extension == ".wav":
-                pass
+                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Audio_Descomprimido.wav")
+                self.Obj3.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
             elif self.extension == ".mov":
-                pass
+                archivo_descomprimido = self.file_archivo.replace("Comprimido.bin", "Video_Descomprimido.mov")
+                self.Obj4.descomprimir(self.file_archivo, self.file_arbol, archivo_descomprimido)
             else:
-                print("No se reconocio la extensión")
+                print("No se reconoció la extensión")
 
         except FileNotFoundError:
             entry.delete(0, tk.END)
