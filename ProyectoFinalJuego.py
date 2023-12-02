@@ -118,6 +118,11 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                                                                                                                                     
         """
         print(game_over)
+        pygame.mixer.music.stop()
+        pygame.mixer.init()
+        pygame.mixer.music.load("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Proyecto_Juego\Game_Over.mp3")
+        pygame.mixer.music.play()
+        time.sleep(5)
         exit()
     def win(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -152,20 +157,23 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                                         ████        █████       ██████   █████     ██████                                                                                             
         """
         print(win)
+        pygame.mixer.music.stop()
         pygame.mixer.init()
         pygame.mixer.music.load("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Proyecto_Juego\win.mp3")
         pygame.mixer.music.play()
+        time.sleep(45)
         exit()
         
     def __init__(self, nom):
+        self.a = True
         self.nom = nom
         self.vidas = 3
-        self.codigo_caja_fuerte = "0000"
+        self.codigo_caja_fuerte = ""
         self.intentos_caja_fuerte = 2
-        self.nombre_policia = ""
-        self.edad_policia = ""
-        self.altura_policia = ""
-        self.peso_policia = ""
+        self.nombre_policia = None
+        self.edad_policia = None
+        self.altura_policia = None
+        self.peso_policia = None
 
         self.decisiones = {
 "inicio": {
@@ -176,7 +184,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
     }
 },
     "Mexico": {
-        "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cabar un tunel \n\t\t\t\t\t\t\t- Asalto a mano armada",
+        "mensaje": "Bienvenido a la mision de Mexico, en esta mision asaltaremos al banco central de Mexico. Para este tenemos opciones de atraco: \n\t\t\t\t\t\t\t- Cavar un tunel \n\t\t\t\t\t\t\t- Asalto a mano armada",
         "opciones": {
             "tunel":  "tunel",
             "mano": "mano"
@@ -199,7 +207,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                     }
                 },
                     "Camaras":{
-                        "mensaje": "Hemos salido del laverinto, es hora de dirigirnos a la caja fuerte pero hay que pasar por desapercibido,\n\t\t\t\t\t\t\t por lo tanto intentaremos no ser vistos por las camaras, escribe 'adelante' para continuar",
+                        "mensaje": "Hemos salido del laberinto, es hora de dirigirnos a la caja fuerte pero hay que pasar por desapercibido,\n\t\t\t\t\t\t\t por lo tanto intentaremos no ser vistos por las camaras, escribe 'adelante' para continuar",
                         "opciones": 
                         {
                             "adelante": self.minijuego_0,
@@ -280,7 +288,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                 "mensaje": "Excelente, ahora tienes que pasar la sección de seguridad para poder abrir la bóveda, escribe 'avanzar' para ir a la última sección",
                                 "opciones":{
                                     "avanzar": self.minijuego_mano_4,
-                                    "decifrar": self.decifrar_caja_fuerte
+                                    "decifrar": self.decifrar_caja_fuerte_mano
                                 }
                             },
 
@@ -436,10 +444,15 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             print(mensaje)
 
     def jugar(self):
+            if self.a == True:
+                self.a = False
+                pygame.mixer.init()
+                pygame.mixer.music.load("OneDrive\Documentos\Tercersemestre\Estructuras II\Parcial 3\Proyecto_Juego\Reloj.mp3")
+                pygame.mixer.music.play()
+
             decision = self.decisiones[self.estado_actual]
             self.mostrar_dialogo(decision["mensaje"])
             while True:
-                pygame.mixer.music.stop()
                 respuesta = input().lower() 
                 for opcion, estado in decision["opciones"].items():
                     if opcion in respuesta:
@@ -943,7 +956,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 print("Felicidaaaaadeeeeees!!!!!!, Lograste entrar a la caja fuerte")
                 print("Fin del juego")
                 ventana.destroy()
-                exit()
+                self.win()
             else:
                 ventana.destroy()
                 if self.intentos_caja_fuerte > 0:
@@ -1439,6 +1452,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             self.game_over()
         else:
             print("Ufff, por poco pierdes, ahora si GANASTE")
+            self.win()
         
 
     def identificacion_falsa(self):
@@ -1449,11 +1463,11 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         time.sleep(4)
         print("Listo")
         x = random.randint(28, 50)
-        self.edad_policia = str(x)
+        self.edad_policia = x
         x = random.randint(20, 99)
-        self.altura_policia = str(100 + x)
+        self.altura_policia = (100 + x)
         x = random.randint(60, 90)
-        self.peso_policia = str(x)
+        self.peso_policia = x
         id = """
         ▓█▓▓▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓                                                           ▒░    
         ▓▓▓▓▓▓▓▒▒▓▓▓██████▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                                                 
@@ -1489,7 +1503,6 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
 
 
     def checar(self):
-        vidas = 3
         lista = [None]*5
         tulista = [None]*5
         num = ""
@@ -1506,30 +1519,30 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             else:
                 tulista[i] = str(int(num)-999)
             num = ""
-        print(lista)
-        print(tulista)
+        print("Lista del banco: ", lista)
+        print("Tu lista:        ",tulista)
         i = 0
         while i < 5 and self.vidas > 0:
             if lista[i] == tulista[i]:
                 print("Número", i+1, ":")
                 resp = input()
-                while resp.lower != 'correcto' and resp.lower() != "reportar":
+                while resp.lower() != 'correcto' and resp.lower() != "reportar":
                     resp = input("Palabra no válida, vuelve a ingresar tu respuesta: ")
                 if resp.lower() == "correcto":
                     i += 1
                 else:
                     self.vidas -= 1
-                    print("Incorrecto, pierdes una vida, vuelve a intentar\nVidas: ", vidas)
+                    print("Incorrecto, pierdes una vida, vuelve a intentar\nVidas: ", self.vidas)
             else:
                 print("Número", i+1, ":")
                 resp = input()
-                while resp.lower != 'correcto' and resp.lower() != "reportar":
+                while resp.lower() != 'correcto' and resp.lower() != "reportar":
                     resp = input("Palabra no válida, vuelve a ingresar tu respuesta: ")
                 if resp.lower() == "reportar":
                     i += 1
                 else:
                     self.vidas -= 1
-                    print("Incorrecto, pierdes una vida, vuelve a intentar\nVidas: ", vidas)
+                    print("Incorrecto, pierdes una vida, vuelve a intentar\nVidas: ", self.vidas)
 
         if self.vidas == 0:
             self.game_over()
@@ -1597,13 +1610,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
     def datos(self):
         print("Tu cara se me hace desconocida, eres nuevo ?, bueno no importa, te haré unas preguntas y veré si coinciden con tu identificación")
         resp = input("Cual es tu nombre? ")
-        if resp.lower() == self.nombre_policia:
+        if resp.lower() == self.nombre_policia.lower():
             print("Correcto")
         else:
             print("Eres un infiltrado")
             self.game_over()
         resp = input("Cual es tu peso? ")
-        if int(resp) == self.altura_policia:
+        if int(resp) == self.peso_policia:
             print("Mmm bien")
         else:
             print("Eres un infiltrado")
@@ -1659,10 +1672,13 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             x = lista_revuelta.index(lista[i]) + 1
             aux += str(i+1) + ":" + str(x)
             #print(aux)
-            resp = input("Ingresa tu respuesta:")
-            if resp == aux:
+            print("Ingresa tu respuesta, vamos con el cable: ", i+1)
+            resp = input()
+            if int(resp[0:1]) != i and (resp == aux or lista[int(resp[0:1])-1] == lista_revuelta[int(resp[2:])-1]):
                 print("Muy bien")
                 i += 1
+                time.sleep(2)
+                os.system('cls' if os.name == 'nt' else 'clear')
             else:
                 intentos -= 1
                 print("Incorrecto, vuelve a intentarlo\nTe quedan:", intentos, "intentos")
@@ -1674,8 +1690,6 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 else:
                     print("Se te acabaron tus vidas")
                     self.game_over()
-            time.sleep(2)
-            os.system('cls' if os.name == 'nt' else 'clear')
         x = random.randint(0,9)
         print("El número de esta sección es el:", x)
         self.codigo_caja_fuerte += str(x)
@@ -1696,7 +1710,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         print("\n",diccionario)
         
         
-        print("# [ = \ } ! | % = !:    = [ |    * ! } ( !     % _")
+        print("Contraseña: = [ |    * ! } ( !     % _")
             #  c o n t r a s e ñ a:    n o s    h a r i a     e l 
         while True:
             cont = input()
