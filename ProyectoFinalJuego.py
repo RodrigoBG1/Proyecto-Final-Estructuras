@@ -4,6 +4,8 @@ import random
 import threading
 import tkinter as tk
 from itertools import islice
+import base64
+import pygame.mixer
 
 Titulo = """
 $$$$$$$\                      $$\                        $$\     $$\                         $$\       
@@ -46,6 +48,9 @@ MMMSMMMMSSSSP   `MMMM     ;.;   :MMMMMMMMM;
   :$$$$$$$$$$$$$$$$$$$$$$.`.:$$SSSSSSSMMMP
 """
 print(Titulo, Personaje)
+pygame.mixer.init()
+pygame.mixer.music.load("OneDrive\Documentos\GitHub\Proyecto-Final-Estructuras\intro.mp3")
+pygame.mixer.music.play()
 
 class Juego:
     def dialogos(self, mensaje):
@@ -113,6 +118,43 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                                                                                                                                                     
         """
         print(game_over)
+        exit()
+    def win(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        win = """
+                                                                                                                                    
+                                                  █████       █████    ████████████     █████      █████                       
+                                                  ██████     ██████   ██████████████    █████      █████                       
+                                                  ██████     ██████  ███████  ███████   █████      █████                       
+                                                   ██████   ██████   ██████    ██████   █████      █████                       
+                                                    ██████ ██████    ██████    ██████   █████      █████                       
+                                                     ███████████     ██████    ██████   █████      █████                       
+                                                      █████████      ██████    ██████   █████      █████                       
+                                                       ███████       ██████    ██████   █████      █████                       
+                                                        █████        ██████    ██████   █████      █████                       
+                                                        █████        ██████    ██████   █████      █████                       
+                                                        █████        ███████  ███████   ██████    ██████                       
+                                                        █████         ██████████████     ██████████████                        
+                                                        █████            ████████          ██████████                          
+                                                                                                                                
+                                                                                                                                
+                                                   █████                ██████  ██████   ██████     █████                       
+                                                   █████      █████     ██████  ██████   ███████    █████                       
+                                                   ██████    ███████   ███████  ██████   ████████   █████                       
+                                                    █████    ███████   ██████   ██████   █████████  █████                       
+                                                    ██████  █████████ ███████   ██████   ██████████ █████                       
+                                                     █████ █████████████████    ██████   ████████████████                       
+                                                     ███████████████████████    ██████   █████ ██████████                       
+                                                      ██████████ ██████████     ██████   █████  █████████                       
+                                                      █████████   █████████     ██████   █████   ████████                       
+                                                       ███████     ███████      ██████   █████    ███████                       
+                                                       ██████      ███████      ██████   █████    ███████                       
+                                                        ████        █████       ██████   █████     ██████                                                                                             
+        """
+        print(win)
+        pygame.mixer.init()
+        pygame.mixer.music.load("OneDrive\Documentos\GitHub\Proyecto-Final-Estructuras\win.mp3")
+        pygame.mixer.music.play()
         exit()
         
     def __init__(self, nom):
@@ -299,12 +341,81 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                             },
 
         "hack": {
-            "mensaje": "Has decidido la opcion de hackear la base de datos del banco, asi podremos recuperar datos y usarlso a tu favor ",
+            "mensaje": "Has decidido la opcion de hackear la base de datos del banco, para esto hiremos buscando partes de la \n\t\t\t\t\t\t\tcontraseña para poder acceder a la base de datos, escribe reglas para continuar",
             "opciones": {
-                "rehen":  "rehen",
+                "reglas":  "reglas",
                 "hack": "hack"
-    }
+                }
             },
+            "reglas": {
+                "mensaje": "Como Has decidido ser un hacker, vas a tener que desifrar codigos para poder acceder a la contraseña, estas listo para empezar a decifrar?",
+                "opciones": {
+                    "si":  self.minh1,
+                    "seguir": "juego 2"
+                    }
+                },
+                "juego 2": {
+                    "mensaje": "Excelente ya has podido pasar la promer prueba, esperemos seguir asi y que no nos encuentre, pero tenemos que actuar rapido, \n\t\t\t\t\t\t\t presiona la tecla t para seguir decifrando",
+                    "opciones": {
+                        "t":  self.minh2,
+                        "r": "juego 3"
+                        }
+                    },
+                    "juego 3": {
+                        "mensaje": "Excelente, acaso llevas clases con Manuel? O Por que eres tan bueno? ",
+                        "opciones": {
+                            "si":  "con razon",
+                            "no": "deberias",
+                            "tal": "con razon",
+                            "jaja": "deberias",
+                            "maybe": "deberias",
+                            "se": "con razon"
+                            }
+                        },
+                        "con razon": {
+                            "mensaje": "Muy bien tu si sabes lo que es bueno, por eso te damos dos opciones: x para jugar el siguiente juego, y para salterte el juego",
+                            "opciones": {
+                                "x":  self.minh3,
+                                "y": "pass"
+                                }
+                            },
+                        "deberias": {
+                            "mensaje": "Pues deberias, no sabes lo que te pierdes, pero bueno es momento de seguir, presiona x ",
+                            "opciones": {
+                                "si":  "con razon",
+                                "no": "deberias"
+                                }
+                            },
+                             "pass": {
+                                "mensaje": "Has decidido saltarte al siguiente nivel, por lo que te daremos la contraseña: 'de', escribe 'x' para continuar",
+                                "opciones": {
+                                    "x":  self.minh4,
+                                    "si": self.win,
+                                    "no": "que"
+                                    }
+                                },
+                            "juego 4": {
+                                "mensaje": "Esta es tu ultima prueba, y por cierto la mas dificil, ya estas cerca de llegar al final, escribe listo para empezar",
+                                "opciones": {
+                                    "listo":  self.minh4,
+                                    "si": self.win,
+                                    "no": "que"
+                                    }
+                                },
+                                "que": {
+                                    "mensaje": "Venga, esta ya es la ultima vez que preguntamos estas cerca de ganar, vuelve a conterar la pregunta",
+                                    "opciones": {
+                                        "si": self.win,
+                                        "no": "como"
+                                        }
+                                    },
+                                "como": {
+                                    "mensaje": "Reconcideralo una vez mas, venga estamos a una sola palabra",
+                                    "opciones": {
+                                        "si": self.win,
+                                        "no": "que"
+                                        }
+                                    },
             "fin": {
                 "mensaje": "El juego ha terminado. ¿Quieres jugar de nuevo?",
                 "opciones": {
@@ -327,6 +438,7 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
             decision = self.decisiones[self.estado_actual]
             self.mostrar_dialogo(decision["mensaje"])
             while True:
+                pygame.mixer.music.stop()
                 respuesta = input().lower() 
                 for opcion, estado in decision["opciones"].items():
                     if opcion in respuesta:
@@ -965,7 +1077,8 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         
         print("\n\nHas logrado pasar por cajas, pero se acerca el pasillo donde hay mayor vigilancia, vas a tener que escabar de las camaras de suguridad")
         print("\tPara ello hemos tomado un registro de la ubicacion de las camaras de suguridad, y hemos notado que tienen un patron ")
-        print("\tla primer camara se encuentra a un rango de 2 pasos, te iremos dando la informacion conforme vayas avanzando")
+        print("\tla primer camara se encuentra a un rango de 2 pasos, cuando rebases los 20 pasos, te enontraras con una camara cada 3 pasos")
+        print("\t al rebasar los 38 pasos te encontras con una camra cada 5 pasos, finalmente al rebasar los 63 pasos te encontraras con una camara cada 7 pasos")
         print("\t¡Cuidado! si te detectan te atraparan y perderas una vida en el juego\n\n")
         
         while True:
@@ -981,17 +1094,17 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
                 self.game_over()
                 return    
                 
-            if pasos < 20:
+            if pasos_totales < 20:
                 print("Sigues en un rango de camara por cada dos pasos")
-            elif pasos > 20 and pasos < 38:
+            elif pasos_totales > 20 and pasos_totales < 38:
                 print("Ahora estas en un rango de camara por cada tres pasos")
-            elif pasos > 38 and pasos < 63:
+            elif pasos_totales > 38 and pasos_totales < 63:
                 print("Ahora estas en un rango de camara por cada cinco pasos")
-            elif pasos > 63 and pasos < 84:
+            elif pasos_totales > 63 and pasos_totales < 84:
                 print("Ahora estas en un rango de camara por cada siete pasos")
 
             if pasos_totales >= 80:
-                print("¡Felicidades! Has dado 100 pasos sin ser atrapado por una cámara de seguridad.")
+                print("¡Felicidades! Has dado", pasos_totales, "pasos sin ser atrapado por una cámara de seguridad.")
                 print("Escribe 'avanzar' para continuar")
                 x = random.randint(0,9)
                 print("El número de esta sección es el:", x)
@@ -1548,11 +1661,160 @@ MMOMMMOMMMMMOMMOOMMMbT8bTSSSSSPd88PdOOOOMMMMOOMMMMMMMMOOMMM """.format(mensaje)
         print("El número de esta sección es el:", x)
         self.codigo_caja_fuerte += str(x)
         print("Escribe 'decifrar' para poner el código en la caja fuerte")
+        
+    def minh1(self):
+        diccionario = """ 
+                                        a b c d e f g h i j k l m n o p q r s t u v w x y z
+                                        ! @ # $ % ^ & * ( ) - _ + = [ ] { } | \ / ? < > , . """
+        
+        
+        print("Para poder conseguir entrar a la base de datos del banco, necesitas conseguir la contraseña de la computadora")
+        print("\t la contrseña esta en un cifrado por lo que sera necesario conseguir la contraeña para despues poderla decifrar")
+        print("\t te hemos brindado un dicionario que te puede ayudar, ya que con este vamos a poder descifrar la contrseña ")
+        print("Ojo, este solo te dara una parte de la contraseña vas a necesitar hacermas para conseguirla, asi que aprendetela")
+        print("\n",diccionario)
+        
+        
+        print("# [ = \ } ! | % = !:    = [ |    * ! } ( !     % _")
+            #  c o n t r a s e ñ a:    n o s    h a r i a     e l 
+        while True:
+            cont = input()
+            if 'nos haria el' in cont:
+                print("HAS ENCONTRADO UNA PARTE DE LA CONTRSEÑAA")
+                print("Da en seguir")
+                return False
+            else:
+                print("Intenta de nuevo")
+                vidas -= 1
 
-    
+
+
+    def jugar_adivinanza(self):
+        palabras = ['python', 'juego', 'adivinanza', 'palabra', 'decifrar']
+        palabra = random.choice(palabras)
+        adivinanza = ['_'] * len(palabra)
+        intentos = 10
+        vidas = 3
+
+        print("¡Bienvenido al juego de adivinanzas!")
+        print("Tienes que adivinar la palabra. La palabra tiene", len(palabra), "letras.")
+        print(" ".join(adivinanza))
+        print("\n")
+
+        while vidas > 0:
+            while intentos > 0 and '_' in adivinanza:
+                letra = input("Ingresa una letra: ")
+                if letra in palabra:
+                    for i in range(len(palabra)):
+                        if palabra[i] == letra:
+                            adivinanza[i] = letra
+                    print("¡Correcto!")
+                else:
+                    intentos -= 1
+                    print("Incorrecto. Te quedan", intentos, "intentos.")
+                print(" ".join(adivinanza))
+                print("\n")
+
+            if '_' in adivinanza:
+                vidas -= 1
+                if vidas == 0:
+                    print("Te has quedado sin vidas.")
+                    return False
+            else:
+                print("¡Felicidades, has ganado!")
+                print("La otra parte de la contraseña es: favor de")
+                print("Presiona la tecla R para continuar")
+                return True
+
+    def minh2(self):
+        for i in range(3):
+            ganado = self.jugar_adivinanza()
+            if ganado:
+                break
+
+        if not ganado:
+            print("Lo siento, has perdido. Fin del juego.")
+            
+
+
+
+    def minh3(self):
+        numero_a_adivinar = random.randint(1, 100)
+        numero_codificado = base64.b64encode(str(numero_a_adivinar).encode())
+
+        print("Es un numero de 0 a 100")
+        print(f"El número codificado es: {numero_codificado.decode()}")
+
+        while True:
+            entrada_usuario = input("Decodifica el número: ")
+
+            if not entrada_usuario.isdigit():
+                
+                print("Por favor, introduce un número válido.")
+                continue
+
+            numero_usuario = int(entrada_usuario)
+
+            if numero_usuario == numero_a_adivinar:
+                print("¡Felicidades! Has decodificado el número correctamente.")
+                print("La otra parte de la contraseña es: 'de'")
+                print("Presiona M para continuar")
+                break
+            elif numero_usuario < numero_a_adivinar:
+                print("El número es mayor. Intenta de nuevo.")
+            else:
+                print("El número es menor. Intenta de nuevo.")
+
+
+    def generar_codigo(self):
+        digitos = [str(num) for num in range(1, 7)]
+        random.shuffle(digitos)
+        print(digitos[:4])
+        return ''.join(digitos[:4])
+
+    def obtener_entrada(self):
+        return input("Ingresa tu número: ")
+
+    def dar_pistas(self, codigo, entrada_usuario):
+        if codigo == entrada_usuario:
+            return "¡Has ganado!"
+
+        pistas = []
+
+        for ind, digito in enumerate(entrada_usuario):
+            if digito == codigo[ind]:
+                pistas.append("Manuel")
+            elif digito in codigo:
+                pistas.append("Memo")
+        if not pistas:
+            return "Rodri"
+
+        pistas.sort()
+        return " ".join(pistas)
+
+    def minh4(self):
+        print("\n¡Vamos a jugar Memo, Rodri y Manuel!")
+        print("\tLas reglas son sencillas, se asignara un codigo de 4 digitos, cada digito puede ser un numero del 1 al 6, lo que tu tines que hacer")
+        print("\tes adivinar el codigo, para eso tienes 10 intentos, cada vez que ingreses un numero, te daremos pistas, si el numero que ingresaste ")
+        print("\testa en el codigo te diremos 'Memo', si el numero que ingresaste esta en el codigo y esta en la posicion correcta te diremos 'Manuel',\n y te diremos 'Rodri' si el numero que ingresaste no esta en el codigo")
+        codigo_secreto = self.generar_codigo()
+        print("He generado un número.")
+
+        while True:
+            entrada_usuario = self.obtener_entrada()
+            resultado = self.dar_pistas(codigo_secreto, entrada_usuario)
+            print(resultado)
+
+            if resultado == "¡Has ganado!":
+                print("La ultima parte de tu contraseña es: 'excentar?'")
+                print("Es momento de de poner la contraseña, pero no es como piensas, la contraseña es la respuesta a la pregunta")
+                break
+
+ 
 nom = input("Ingresa tu nombre: ")
-print("Cargando...")
-time.sleep(2) 
+#print("Cargando...")
+#time.sleep(2) 
 os.system('cls' if os.name == 'nt' else 'clear')
 juego = Juego(nom)
-juego.jugar()
+juego.win()
+#juego.jugar()
